@@ -9,10 +9,17 @@ export function flyImageToCart(imgElOrSrc){
     const fly = document.createElement('img');
     fly.src = src || '';
     fly.style.position = 'fixed';
-    fly.style.left = (startRect ? startRect.left : window.innerWidth/2 - 40) + 'px';
-    fly.style.top = (startRect ? startRect.top : window.innerHeight/2 - 40) + 'px';
-    fly.style.width = (startRect ? startRect.width : 80) + 'px';
-    fly.style.height = (startRect ? startRect.height : 80) + 'px';
+    
+    // Use provided rect or default to center of viewport
+    const startX = startRect ? startRect.left : (window.innerWidth / 2 - 40);
+    const startY = startRect ? startRect.top : (window.innerHeight / 2 - 40);
+    const startWidth = startRect ? startRect.width : 80;
+    const startHeight = startRect ? startRect.height : 80;
+    
+    fly.style.left = startX + 'px';
+    fly.style.top = startY + 'px';
+    fly.style.width = startWidth + 'px';
+    fly.style.height = startHeight + 'px';
     fly.style.borderRadius = '8px';
     fly.style.zIndex = 9999;
     fly.style.pointerEvents = 'none';
@@ -20,8 +27,14 @@ export function flyImageToCart(imgElOrSrc){
     document.body.appendChild(fly);
 
     const targetRect = target.getBoundingClientRect();
-    const dx = targetRect.left + (targetRect.width/2) - (startRect ? (startRect.left + startRect.width/2) : (window.innerWidth/2));
-    const dy = targetRect.top + (targetRect.height/2) - (startRect ? (startRect.top + startRect.height/2) : (window.innerHeight/2));
+    const startCenterX = startX + (startWidth / 2);
+    const startCenterY = startY + (startHeight / 2);
+    const targetCenterX = targetRect.left + (targetRect.width / 2);
+    const targetCenterY = targetRect.top + (targetRect.height / 2);
+    
+    const dx = targetCenterX - startCenterX;
+    const dy = targetCenterY - startCenterY;
+    
     // scale down as it moves
     requestAnimationFrame(()=>{
       fly.style.transform = `translate(${dx}px, ${dy}px) scale(0.22) rotate(-10deg)`;

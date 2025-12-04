@@ -13,6 +13,46 @@
       (function() {
         const memoryStore = new Map();
         
+        // Replace Storage methods before anything uses them
+        const handlers = {
+          getItem: function(key) {
+            try {
+              return window.localStorage.getItem(key);
+            } catch (e) {
+              return memoryStore.get(key) || null;
+            }
+          },
+          setItem: function(key, value) {
+            try {
+              window.localStorage.setItem(key, value);
+            } catch (e) {
+              memoryStore.set(key, value);
+            }
+          },
+          removeItem: function(key) {
+            try {
+              window.localStorage.removeItem(key);
+            } catch (e) {
+              memoryStore.delete(key);
+            }
+          },
+          clear: function() {
+            try {
+              window.localStorage.clear();
+            } catch (e) {
+              memoryStore.clear();
+            }
+          }
+        };
+
+        // Monkey-patch localStorage
+        Object.defineProperty(window, 'localStorage', {
+          get: function() {
+            return handlers;
+          },
+          configurable: true
+        });
+
         // Suppress console errors for storage
         const origError = console.error;
         console.error = function(...args) {
@@ -28,7 +68,7 @@
           return origWarn.apply(console, args);
         };
         
-        // Capture unhandledrejection
+        // Suppress unhandledrejection errors
         window.addEventListener('unhandledrejection', function(e) {
           if (e && e.reason) {
             const msg = (e.reason.message || String(e.reason)).toLowerCase();
@@ -40,7 +80,7 @@
           }
         }, true);
         
-        // Capture error events
+        // Suppress error events
         window.addEventListener('error', function(e) {
           if (e && e.message && e.message.toLowerCase().includes('storage')) {
             e.preventDefault();
@@ -48,6 +88,8 @@
             return false;
           }
         }, true);
+      })();
+    </script>
         
         // Override Storage methods - SAFE versions that NEVER throw
         try {
