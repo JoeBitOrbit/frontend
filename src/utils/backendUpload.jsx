@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getItem } from './safeStorage.js';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+const backendUrl = import.meta.env.VITE_BACKEND_URL || 'https://nikola-backend.onrender.com';
 
 /**
  * Upload a file to the backend (which then uploads to Supabase)

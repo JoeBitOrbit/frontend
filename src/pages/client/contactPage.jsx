@@ -21,7 +21,7 @@ export default function ContactPage(){
     }
     setLoading(true);
     try{
-      await axios.post(import.meta.env.VITE_BACKEND_URL + '/api/contact', form);
+      await axios.post(import.meta.env.VITE_BACKEND_URL + '/api/tickets', form);
       toast.success('Message sent successfully');
       setForm({ name:'', email:'', subject:'', message:'' });
       setSent(true);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getItem } from '../utils/safeStorage.js';
 
-const fallbackBase = 'http://localhost:5000';
+const fallbackBase = 'https://nikola-backend.onrender.com';
 const client = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL || fallbackBase,
 });
