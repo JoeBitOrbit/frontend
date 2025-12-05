@@ -90,43 +90,6 @@
         }, true);
       })();
     </script>
-        
-        // Override Storage methods - SAFE versions that NEVER throw
-        try {
-          const getItem = Storage.prototype.getItem;
-          Storage.prototype.getItem = function(key) {
-            try {
-              return getItem.call(this, key);
-            } catch (err) {
-              // Silently return from memory store
-              return memoryStore.get(key) || null;
-            }
-          };
-          
-          const setItem = Storage.prototype.setItem;
-          Storage.prototype.setItem = function(key, value) {
-            try {
-              return setItem.call(this, key, value);
-            } catch (err) {
-              // Silently store in memory
-              memoryStore.set(key, value);
-            }
-          };
-          
-          const removeItem = Storage.prototype.removeItem;
-          Storage.prototype.removeItem = function(key) {
-            try {
-              return removeItem.call(this, key);
-            } catch (err) {
-              // Silently remove from memory
-              memoryStore.delete(key);
-            }
-          };
-        } catch (e) {
-          // If we can't patch Storage, continue
-        }
-      })();
-    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
