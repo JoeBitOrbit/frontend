@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Header from "../../components/header";
-import Footer from "../../components/Footer";
 import ProductsPage from "./productsPage";
 import ProductOverViewPage from "./productOverView.jsx";
 import CartPage from "./cart";
@@ -14,9 +13,9 @@ import WishlistPage from './wishlist';
 
 export default function ClientWebPage() {
 	return (
-		<div className="w-full min-h-screen flex flex-col">
+		<div className="w-full h-screen max-h-screen">
 			<Header />
-			<div className="flex-1 w-full">
+			<div className="w-full h-[calc(100%-100px)] ">
 				<Routes path="/">
 					<Route path="/" element={<HomeLanding />} />
 					<Route
@@ -50,7 +49,6 @@ export default function ClientWebPage() {
 					/>
 				</Routes>
 			</div>
-			<Footer />
 		</div>
 	);
 }
