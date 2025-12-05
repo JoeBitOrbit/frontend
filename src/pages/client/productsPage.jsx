@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import Loader from "../../components/loader";
 import ProductCard from "../../components/productCard";
 import ProductSkeleton from "../../components/productSkeleton";
+import Footer from "../../components/Footer";
 import { FaShoppingBasket } from "react-icons/fa";
 
 function ProductsLoader({ fadeOut, products }) {
@@ -277,6 +278,7 @@ export default function ProductsPage() {
 					</div>
 				</div>
 			</section>
+			<Footer />
 		</div>
 	);
 }

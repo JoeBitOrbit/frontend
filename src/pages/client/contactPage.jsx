@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Footer from '../../components/Footer';
 
 export default function ContactPage(){
   const [form,setForm] = useState({ name:'', email:'', subject:'', message:'' });
@@ -64,6 +65,7 @@ export default function ContactPage(){
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }

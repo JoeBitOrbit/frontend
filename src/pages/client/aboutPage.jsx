@@ -1,3 +1,5 @@
+import Footer from '../../components/Footer';
+
 export default function AboutPage(){
   return (
     <div className="w-full h-full overflow-y-auto p-8 md:p-14 bg-white text-black">
@@ -26,6 +28,7 @@ export default function AboutPage(){
           <li>Forward-looking roadmap including personalization and AI-powered recommendations.</li>
         </ul>
       </div>
+      <Footer />
     </div>
   );
 }
