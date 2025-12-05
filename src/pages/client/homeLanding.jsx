@@ -5,6 +5,7 @@ import ImageSlider from '../../components/imageSlider';
 import { sendOtp, verifyOtp } from '../../services/newsletter';
 import { startSocialProof } from '../../utils/socialProof';
 import Type3D from '../../components/Type3D';
+import Footer from '../../components/Footer';
 import { PiHandSwipeLeftDuotone } from 'react-icons/pi';
 import { getItem as safeGetItem, setItem as safeSetItem, getItem } from '../../utils/safeStorage';
 
@@ -321,7 +322,7 @@ export default function HomeLanding(){
           <NewsletterSignup />
         </div>
       </section>
-
+      <Footer />
     </div>
   );
 }
