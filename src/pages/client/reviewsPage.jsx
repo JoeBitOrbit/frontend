@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { getItem, setItem } from '../../utils/safeStorage';
 
 const initialReviews = [
-  { id:1, name:'Ava', rating:5, text:'Premium feel and fast delivery. Love the design aesthetics.' },
-  { id:2, name:'Liam', rating:4, text:'Quality exceeded expectations. Would like more color options.' },
-  { id:3, name:'Noah', rating:5, text:'Sturdy build, looks exactly like the photos. Highly recommended.' }
+  { id:1, name:'Amara', rating:5, text:'Absolutely love the quality! The craftsmanship reminds me of traditional Sri Lankan tailoring with a modern twist. Highly recommended to everyone in Colombo and beyond.' },
+  { id:2, name:'Ravi', rating:4, text:'Beautiful designs and fast delivery across Colombo. The fabric quality exceeded my expectations. Would appreciate more local payment options.' },
+  { id:3, name:'Priya', rating:5, text:'Finally found a brand that understands Sri Lankan style! The pieces are perfect for both formal and casual wear. Great service from the team!' }
 ];
 
 export default function ReviewsPage(){
