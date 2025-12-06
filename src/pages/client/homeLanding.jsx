@@ -253,7 +253,7 @@ function FeaturesCarousel(){
   const visibleItems = features.slice(currentIndex, currentIndex + itemsPerPage);
 
   return (
-    <section className="px-6 md:px-12 lg:px-20 py-12 pb-16">
+    <section className="px-6 md:px-12 lg:px-20 py-12 mb-8">
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-3xl font-bold text-black">Why Choose Nikola</h2>
         {features.length > itemsPerPage && (
