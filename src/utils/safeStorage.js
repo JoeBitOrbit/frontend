@@ -1,22 +1,17 @@
-// Safe storage wrapper to avoid errors in restricted contexts (iframes, privacy mode, static sites)
-// Falls back to in-memory map if localStorage is not accessible.
 const memoryStore = new Map();
 
 function canUse(){
   try{
     if(typeof window === 'undefined') return false;
     
-    // Don't try to check the property existence since that can throw in some contexts
     let storage;
     try {
       storage = window.localStorage;
       if (!storage) return false;
     } catch(e) {
-      // If we can't even access localStorage property, it's not available
       return false;
     }
     
-    // Test with a unique key to avoid conflicts
     const testKey = '__stor_test_' + Date.now();
     
     try {
@@ -24,12 +19,9 @@ function canUse(){
       storage.removeItem(testKey);
       return true;
     } catch(e) {
-      // SecurityError, QuotaExceededError, or any DOMException means storage isn't available
-      // This is the expected path on Render and restricted contexts
       return false;
     }
   }catch(e){
-    // Outermost catch for any unexpected errors
     return false;
   }
 }

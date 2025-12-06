@@ -39,24 +39,24 @@ export default function ContactPage(){
         <div className="max-w-3xl mx-auto">
           <h1 className="text-3xl font-bold mb-6">Contact Nikola</h1>
           <p className="mb-8 text-sm text-gray-600">Questions, feedback, or support requests—drop us a message and we will get back to you soon.</p>
-        <form onSubmit={submit} className="grid gap-6">
-          <div className="grid md:grid-cols-2 gap-6">
+        <form onSubmit={submit} className="grid gap-6 w-full">
+          <div className="grid grid-cols-2 gap-6 w-full">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Name *</label>
-              <input value={form.name} onChange={e=> update('name', e.target.value)} className="px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none" required/>
+              <input value={form.name} onChange={e=> update('name', e.target.value)} className="w-full px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none" required/>
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Email *</label>
-              <input type="email" value={form.email} onChange={e=> update('email', e.target.value)} className="px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none" required/>
+              <input type="email" value={form.email} onChange={e=> update('email', e.target.value)} className="w-full px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none" required/>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Subject *</label>
-            <input value={form.subject} onChange={e=> update('subject', e.target.value)} className="px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none" required/>
+            <input value={form.subject} onChange={e=> update('subject', e.target.value)} className="w-full px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none" required/>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Message *</label>
-            <textarea value={form.message} onChange={e=> update('message', e.target.value)} rows={8} className="px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none resize-y" required/>
+            <textarea value={form.message} onChange={e=> update('message', e.target.value)} rows={8} className="w-full px-4 py-4 text-base rounded-md bg-white text-black border-2 border-red-600 focus:border-red-700 outline-none resize-y" required/>
           </div>
           <div className="flex items-center gap-4">
             <button disabled={loading} className="px-6 py-3 rounded-md bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white font-semibold transition shadow-md">
