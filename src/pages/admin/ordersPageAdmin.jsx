@@ -240,14 +240,15 @@ export default function OrdersPageAdmin() {
 						<div>
 							<h3 className="text-xl font-semibold mb-2">Items</h3>
 							<div className="space-y-4 max-h-[100px] overflow-y-auto">
-								{clickedOrder.items.map((item, index) => (
-									<div
-										key={item._id || index}
-										className="flex items-center gap-4 border p-3 rounded-md"
-									>
-										<img
-											src={item.image}
-											alt={item.name}
+								{clickedOrder.items && clickedOrder.items.length > 0 ? (
+									clickedOrder.items.map((item, index) => (
+										<div
+											key={item._id || index}
+											className="flex items-center gap-4 border p-3 rounded-md"
+										>
+											<img
+												src={item.image}
+												alt={item.name}
 											className="w-16 h-16 object-cover rounded-md border"
 										/>
 										<div className="flex-1">
@@ -261,7 +262,10 @@ export default function OrdersPageAdmin() {
 											</p>
 										</div>
 									</div>
-								))}
+								))
+								) : (
+									<div className="text-gray-500 text-sm">No items in this order</div>
+								)}
 							</div>
 						</div>
 					</div>
