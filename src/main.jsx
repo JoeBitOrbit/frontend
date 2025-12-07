@@ -7,9 +7,8 @@ import { BrowserRouter } from 'react-router-dom'
 import GlobalLoader from './components/GlobalLoader'
 import './utils/storageErrorHandler.js'
 
-// CRITICAL: Suppress ALL storage errors at global level
+
 if (typeof window !== 'undefined') {
-  // Suppress unhandled promise rejections from storage errors
   window.addEventListener('unhandledrejection', event => {
     const msg = event?.reason?.message || String(event?.reason || '');
     if (msg.includes('storage') || msg.includes('Storage') || msg.includes('Access')) {
@@ -17,19 +16,16 @@ if (typeof window !== 'undefined') {
     }
   });
 
-  // Override fetch to suppress storage error responses
   const originalFetch = window.fetch;
   window.fetch = function(...args) {
     return originalFetch.apply(this, args).catch(err => {
       if (err && err.message && (err.message.includes('storage') || err.message.includes('Access'))) {
-        console.log('[Storage Error Suppressed]', err.message);
         return Promise.resolve(new Response('', { status: 500 }));
       }
       throw err;
     });
   };
 
-  // Wrap document.addEventListener to suppress storage errors
   const originalAddEventListener = EventTarget.prototype.addEventListener;
   EventTarget.prototype.addEventListener = function(type, listener, options) {
     if (type === 'unhandledrejection' || type === 'error') {
@@ -50,7 +46,6 @@ if (typeof window !== 'undefined') {
   };
 }
 
-// Suppress storage access errors globally
 if (typeof window !== 'undefined') {
   try {
     const originalSetItem = Storage.prototype.setItem;
@@ -74,8 +69,7 @@ if (typeof window !== 'undefined') {
         if(!e.message.includes('storage')) throw e;
       }
     };
-  } catch(e) { /* ignore */ }
-}
+  } catch(e) { }
 
 function ErrorOverlay(){
   const [error, setError] = useState(null);
@@ -114,7 +108,6 @@ function ErrorOverlay(){
 // Simple passthrough when using static import
 function AppLoader(){ return <App />; }
 
-// Lightweight DOM-level error overlay (attaches before React mounts)
 function showDomError(message){
   try{
     let overlay = document.getElementById('dev-error-overlay');
@@ -133,12 +126,10 @@ function showDomError(message){
     }
     overlay.innerText = typeof message === 'string' ? message : JSON.stringify(message, null, 2);
   }catch(e){
-    // ignore
     }
 }
 
 window.addEventListener('error', (ev)=>{
-  // Suppress storage access errors completely
   if(ev && ev.message && (ev.message.includes('storage') || ev.message.includes('Storage'))) {
     ev.preventDefault();
     return;
@@ -146,7 +137,6 @@ window.addEventListener('error', (ev)=>{
   try{ showDomError((ev && ev.message) || String(ev)); }catch(e){}
 });
 window.addEventListener('unhandledrejection', (ev)=>{
-  // Suppress storage access errors completely
   if(ev && ev.reason && ev.reason.message && (ev.reason.message.includes('storage') || ev.reason.message.includes('Storage'))) {
     ev.preventDefault();
     return;
@@ -154,12 +144,10 @@ window.addEventListener('unhandledrejection', (ev)=>{
   try{ showDomError((ev && ev.reason && ev.reason.message) || JSON.stringify(ev)); }catch(e){}
 });
 
-// Error boundary to catch render errors inside React tree
 class AppErrorBoundary extends Component {
   constructor(props){ super(props); this.state = { error: null }; }
   static getDerivedStateFromError(error){ return { error }; }
   componentDidCatch(error, info){
-    // Mirror to DOM overlay as well
     showDomError((error && (error.message || String(error))) + '\n' + (info && info.componentStack ? info.componentStack : ''));
   }
   render(){
