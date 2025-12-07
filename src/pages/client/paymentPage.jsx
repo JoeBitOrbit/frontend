@@ -279,11 +279,3 @@ export default function PaymentPage() {
 		</div>
 	);
 }
-							<strong>Test Mode:</strong> Enter any card details. This is a simulation for demonstration purposes only.
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
-}
