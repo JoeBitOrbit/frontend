@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { FiShoppingBag, BiStore } from "react-icons/bi";
+import { FiShoppingBag } from "react-icons/fi";
+import { BiStore } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiHome } from "react-icons/hi";
 import { FaRegHeart } from "react-icons/fa";
