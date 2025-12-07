@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { getItem } from "../../utils/safeStorage.js";
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { getItem } from '../../utils/safeStorage.js';
 
 export default function CheckoutPage() {
   const location = useLocation();
