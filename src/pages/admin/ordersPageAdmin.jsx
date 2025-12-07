@@ -119,7 +119,7 @@ export default function OrdersPageAdmin() {
 											setPopupVisible(false);
 											try {
 												await axios.put(
-													import.meta.env.VITE_BACKEND_URL + "/api/orders/" + clickedOrder.orderID,
+													import.meta.env.VITE_BACKEND_URL + "/api/orders/" + clickedOrder._id,
 													{
 														status: orderStatus,
 														notes: orderNotes
@@ -146,7 +146,7 @@ export default function OrdersPageAdmin() {
 										if (!confirm('Delete this order permanently?')) return;
 										try {
 											await axios.delete(
-												import.meta.env.VITE_BACKEND_URL + "/api/orders/" + clickedOrder.orderID,
+												import.meta.env.VITE_BACKEND_URL + "/api/orders/" + clickedOrder._id,
 												{ headers: { Authorization: `Bearer ${getItem("token")}` } }
 											);
 											toast.success('Order deleted');
