@@ -37,11 +37,29 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  const [cart, setCart] = useState(location.state.items || []);
-  if (location.state.items == null) {
-    toast.error("Please select items to checkout");
-    navigate("/products");
-  }
+  const [cart, setCart] = useState(() => {
+    const items = location.state?.items;
+    if (!items || items.length === 0) {
+      // Try to get cart from storage as fallback
+      const savedCart = getItem('cart');
+      if (savedCart) {
+        try {
+          return JSON.parse(savedCart);
+        } catch (e) {
+          return [];
+        }
+      }
+      return [];
+    }
+    return items;
+  });
+
+  useEffect(() => {
+    if (!cart || cart.length === 0) {
+      toast.error('Your cart is empty. Please add items before checkout.');
+      navigate('/products');
+    }
+  }, [cart, navigate]);
 
   function getTotal() {
     let total = 0;

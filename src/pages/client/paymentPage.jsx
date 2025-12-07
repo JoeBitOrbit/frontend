@@ -9,18 +9,20 @@ import { playPaymentCelebration } from '../../utils/cardAnimations';
 export default function PaymentPage() {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const { orderData } = location.state || {};
+	const orderData = location.state?.orderData;
+	
 	const [processing, setProcessing] = useState(false);
 	const [cardNumber, setCardNumber] = useState('');
 	const [cardName, setCardName] = useState('');
 	const [expiry, setExpiry] = useState('');
 	const [cvv, setCvv] = useState('');
 
-	if (!orderData) {
-		toast.error('No order data found');
-		navigate('/cart');
-		return null;
-	}
+	useEffect(() => {
+		if (!orderData || !orderData.items || orderData.items.length === 0) {
+			toast.error('No order data found. Please start over.');
+			navigate('/cart');
+		}
+	}, [orderData, navigate]);
 
 	const handlePayment = async () => {
 		// Validate fields
@@ -96,7 +98,24 @@ export default function PaymentPage() {
 		}
 	};
 
-	const total = orderData.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
+	const total = orderData?.items?.reduce((sum, item) => sum + ((item.qty || 0) * (item.price || 0)), 0) || 0;
+
+	if (!orderData || !orderData.items || orderData.items.length === 0) {
+		return (
+			<div className="w-full min-h-screen bg-gray-50 flex flex-col items-center justify-center py-12 px-4">
+				<div className="text-center">
+					<h2 className="text-2xl font-bold text-gray-800 mb-4">No Order Found</h2>
+					<p className="text-gray-600 mb-6">Please go back and add items to your cart.</p>
+					<button 
+						onClick={() => navigate('/cart')}
+						className="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700"
+					>
+						Back to Cart
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	return (
 		<div className="w-full min-h-screen bg-gray-50 flex flex-col items-center py-12 px-4">
