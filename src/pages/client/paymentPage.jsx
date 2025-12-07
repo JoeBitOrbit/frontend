@@ -12,11 +12,11 @@ export default function PaymentPage() {
 	
 	const [processing, setProcessing] = useState(false);
 	const [formData, setFormData] = useState({
-		cardNumber: '4111111111111111',
-		cardName: 'Test Card',
-		expiryMonth: '12',
-		expiryYear: '25',
-		cvv: '123'
+		cardNumber: '',
+		cardName: '',
+		expiryMonth: '01',
+		expiryYear: new Date().getFullYear().toString().slice(-2),
+		cvv: ''
 	});
 
 	useEffect(() => {
@@ -186,7 +186,7 @@ export default function PaymentPage() {
 								name="cardNumber"
 								value={formData.cardNumber}
 								onChange={handleInputChange}
-								placeholder="4111111111111111"
+								placeholder="1234 5678 9012 3456"
 								className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-red-600 focus:ring-2 focus:ring-red-100 outline-none transition text-black"
 								maxLength="16"
 							/>
