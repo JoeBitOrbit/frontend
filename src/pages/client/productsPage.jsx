@@ -147,7 +147,8 @@ function ProductsLoader({ fadeOut, products }) {
 }
 
 export default function ProductsPage() {
-	const { christmasMode } = useChristmas();
+	const christmasContext = useChristmas();
+	const christmasMode = christmasContext?.christmasMode || false;
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [fadeLoader, setFadeLoader] = useState(false);

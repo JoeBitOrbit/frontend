@@ -13,7 +13,7 @@ import ForgetPasswordPage from "./pages/client/forgetPassword";
 import { init3DTyping } from "./utils/typing3d";
 import Snowflakes from "./components/Snowflakes";
 import ChristmasGiftModal from "./components/ChristmasGiftModal";
-import { ChristmasProvider, useChristmas } from "./context/ChristmasContext";
+import { useChristmas } from "./context/ChristmasContext";
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -59,11 +59,7 @@ function AppContent() {
 }
 
 function App() {
-	return (
-		<ChristmasProvider>
-			<AppContent />
-		</ChristmasProvider>
-	);
+	return <AppContent />;
 }
 
 export default App;

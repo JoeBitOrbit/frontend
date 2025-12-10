@@ -5,7 +5,8 @@ import { useChristmas } from '../context/ChristmasContext';
 import { useLocation } from 'react-router-dom';
 
 export default function GlobalLoader(){
-  const { christmasMode } = useChristmas();
+  const christmasContext = useChristmas();
+  const christmasMode = christmasContext?.christmasMode || false;
   const location = useLocation();
   const [visible, setVisible] = useState(true); // currently mounted & fading
   const [active, setActive] = useState(true);   // animation phase

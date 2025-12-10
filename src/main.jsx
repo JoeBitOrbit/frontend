@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import GlobalLoader from './components/GlobalLoader'
+import { ChristmasProvider } from './context/ChristmasContext'
 import './utils/storageErrorHandler.js'
 
 
@@ -166,15 +167,17 @@ class AppErrorBoundary extends Component {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-      <GlobalLoader />
-      <div id="app-root" className="app-root transition-all duration-300">
-        <AppErrorBoundary>
-          <AppLoader />
-        </AppErrorBoundary>
-      </div>
-      <ErrorOverlay />
-    </BrowserRouter>
+    <ChristmasProvider>
+      <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <GlobalLoader />
+        <div id="app-root" className="app-root transition-all duration-300">
+          <AppErrorBoundary>
+            <AppLoader />
+          </AppErrorBoundary>
+        </div>
+        <ErrorOverlay />
+      </BrowserRouter>
+    </ChristmasProvider>
   </StrictMode>,
 )
 

@@ -16,7 +16,8 @@ import { getItem } from "../../utils/safeStorage.js";
 import { useChristmas } from "../../context/ChristmasContext";
 
 export default function ProductOverViewPage() {
-	const { christmasMode } = useChristmas();
+	const christmasContext = useChristmas();
+	const christmasMode = christmasContext?.christmasMode || false;
 	const params = useParams();
 	const [product, setProduct] = useState(null);
 	const [reviewsData, setReviewsData] = useState({ reviews: [], total:0, page:1, pages:1, breakdown: {1:0,2:0,3:0,4:0,5:0} });

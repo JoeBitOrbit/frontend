@@ -2,7 +2,8 @@ import { useChristmas } from '../context/ChristmasContext';
 import './ChristmasStarLoader.css';
 
 export default function ChristmasStarLoader() {
-  const { christmasMode } = useChristmas();
+  const christmasContext = useChristmas();
+  const christmasMode = christmasContext?.christmasMode || false;
 
   if (!christmasMode) return null;
 

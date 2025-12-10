@@ -4,7 +4,8 @@ import ChristmasStarLoader from './ChristmasStarLoader';
 import { useChristmas } from '../context/ChristmasContext';
 
 export default function AdminMatrixLoader() {
-  const { christmasMode } = useChristmas();
+  const christmasContext = useChristmas();
+  const christmasMode = christmasContext?.christmasMode || false;
   
   if(christmasMode) return <ChristmasStarLoader />;
   const canvasRef = useRef(null);

@@ -88,7 +88,8 @@ function MatrixRainLoader({ fadeOut }) {
 }
 
 export default function AdminPage() {
-    const { christmasMode } = useChristmas();
+    const christmasContext = useChristmas();
+    const christmasMode = christmasContext?.christmasMode || false;
     const navigate = useNavigate();
     const [adminValidated, setAdminValidated] = useState(false);
     const [showLoader, setShowLoader] = useState(true);
