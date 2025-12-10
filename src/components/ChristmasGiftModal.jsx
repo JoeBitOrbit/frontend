@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useChristmas } from '../context/ChristmasContext';
+import './ChristmasGiftModal.css';
 
 const ChristmasGiftModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const canvasRef = useRef(null);
+  const presentRef = useRef(null);
   const { christmasMode, discount } = useChristmas();
 
   const CLICKS_NEEDED = 20;
@@ -13,7 +15,6 @@ const ChristmasGiftModal = () => {
   useEffect(() => {
     if (!christmasMode) return;
 
-    // Check if user has already seen the gift this session
     const hasSeenGift = sessionStorage.getItem('christmasGiftSeen');
     if (!hasSeenGift) {
       setIsOpen(true);
@@ -36,7 +37,6 @@ const ChristmasGiftModal = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Snowflake animation on canvas
     const snowflakes = [];
     const maxSnowflakes = Math.min(100, Math.max(canvas.width / 20, 50));
 
@@ -93,11 +93,23 @@ const ChristmasGiftModal = () => {
   }, [isOpen]);
 
   const handleGiftClick = () => {
-    setClickCount(prev => prev + 1);
+    if (isOpened) return;
+
     const newCount = clickCount + 1;
+    setClickCount(newCount);
+
+    if (presentRef.current) {
+      presentRef.current.style.setProperty('--count', Math.ceil(newCount / 2));
+      presentRef.current.classList.add('animate');
+      setTimeout(() => {
+        presentRef.current?.classList.remove('animate');
+      }, 300);
+    }
 
     if (newCount >= CLICKS_NEEDED) {
-      setIsOpened(true);
+      setTimeout(() => {
+        setIsOpened(true);
+      }, 300);
     }
   };
 
@@ -108,130 +120,140 @@ const ChristmasGiftModal = () => {
   if (!isOpen || !christmasMode) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[10000] pointer-events-auto">
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[10000] pointer-events-auto overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
       />
 
-      <div className="relative z-10 flex flex-col items-center justify-center gap-4 md:gap-6 px-4">
+      <style>{`
+        @keyframes wiggle {
+          0% { transform: translateX(0) rotateX(0); }
+          25% { transform: translateX(calc(var(--count) * -1px)) rotateX(calc(var(--count) * 1deg)); }
+          50% { transform: translateX(0) rotateX(0); }
+          75% { transform: translateX(calc(var(--count) * 1px)) rotateX(calc(var(--count) * -1deg)); }
+          100% { transform: translateX(0) rotateX(0); }
+        }
+
+        @keyframes present-rotate {
+          0% { transform: rotateY(0); }
+          100% { transform: rotateY(360deg); }
+        }
+
+        @keyframes lid-animation {
+          0% { transform: translate3d(0, 0, 0) rotateX(0); }
+          5% { transform: translate3d(0, -10px, -5px) rotateX(5deg); }
+          10% { transform: translate3d(0, -10px, 5px) rotateX(-5deg); }
+          15% { transform: translate3d(0, -10px, -5px) rotateX(5deg); }
+          20% { transform: translate3d(0, -10px, 5px) rotateX(-5deg); }
+          25% { transform: translate3d(0, -10px, -5px) rotateX(5deg); }
+          30% { transform: translate3d(0, 0, 0) rotateX(0); }
+        }
+
+        @keyframes confetti {
+          0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+          100% { transform: translateY(100vh) rotateZ(720deg); opacity: 0; }
+        }
+      `}</style>
+
+      <div className="relative z-10 flex flex-col items-center justify-center gap-4 md:gap-6 px-4 w-full h-full">
         {/* Headline */}
-        <div className="text-4xl md:text-6xl lg:text-7xl font-bold text-white/20 text-center select-none">
+        <div className="absolute top-10 md:top-20 text-4xl md:text-6xl lg:text-8xl font-bold text-white/15 text-center select-none" style={{ fontFamily: "'Mountains of Christmas', cursive" }}>
           MERRY CHRISTMAS
         </div>
 
         {/* Instructions */}
         {!isOpened && (
-          <div className="text-2xl md:text-4xl font-bold text-white text-center select-none animate-pulse">
+          <div className="absolute top-1/4 text-3xl md:text-5xl lg:text-6xl font-bold text-white text-center select-none animate-pulse" style={{ fontFamily: "'Mountains of Christmas', cursive" }}>
             CHRISTMAS PIÑATA
           </div>
         )}
 
-        {/* Gift Box Container */}
-        <div className="relative w-40 h-40 md:w-56 md:h-56 perspective cursor-pointer" onClick={handleGiftClick}>
-          {!isOpened ? (
-            // Closed Gift
-            <div
-              className="w-full h-full relative transition-transform duration-300 hover:scale-105"
-              style={{
-                transformStyle: 'preserve-3d',
-                animation: clickCount > 0 ? `wiggle 0.3s ease-in-out` : 'spin 4s linear infinite'
-              }}
-            >
-              {/* Gift Box */}
-              <div className="w-full h-full bg-red-600 rounded-lg shadow-2xl flex items-center justify-center border-4 border-red-700">
-                {/* Gold Ribbon Horizontal */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="absolute w-full h-12 bg-yellow-400 opacity-80"></div>
-                </div>
+        {/* 3D Gift Box */}
+        {!isOpened ? (
+          <div
+            ref={presentRef}
+            className="gift-present"
+            onClick={handleGiftClick}
+            style={{
+              '--count': Math.ceil(clickCount / 2)
+            }}
+          >
+            <div className="wiggle-container">
+              <div className="rotate-container">
+                <div className="bottom"></div>
+                <div className="front"></div>
+                <div className="left"></div>
+                <div className="back"></div>
+                <div className="right"></div>
 
-                {/* Gold Ribbon Vertical */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="absolute h-full w-12 bg-yellow-400 opacity-80"></div>
-                </div>
-
-                {/* Bow */}
-                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-20 h-12 pointer-events-none">
-                  <div className="absolute left-0 w-8 h-8 bg-yellow-400 rounded-full"></div>
-                  <div className="absolute right-0 w-8 h-8 bg-yellow-400 rounded-full"></div>
-                  <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-yellow-300 rounded-full"></div>
-                </div>
-
-                {/* Click Counter Text */}
-                <div className="text-center select-none z-10">
-                  <div className="text-white font-bold text-sm md:text-lg">
-                    {clickCount}/{CLICKS_NEEDED}
-                  </div>
-                  <div className="text-white font-bold text-xs md:text-sm">
-                    CLICK ME!
-                  </div>
+                <div className="lid">
+                  <div className="lid-top"></div>
+                  <div className="lid-front"></div>
+                  <div className="lid-left"></div>
+                  <div className="lid-back"></div>
+                  <div className="lid-right"></div>
                 </div>
               </div>
-
-              <style>{`
-                @keyframes spin {
-                  0% { transform: rotateY(0deg) rotateX(5deg); }
-                  100% { transform: rotateY(360deg) rotateX(5deg); }
-                }
-                @keyframes wiggle {
-                  0%, 100% { transform: rotateZ(0deg) scale(1); }
-                  25% { transform: rotateZ(-5deg) scale(1.05); }
-                  75% { transform: rotateZ(5deg) scale(1.05); }
-                }
-              `}</style>
             </div>
-          ) : (
-            // Opened Gift - Show Discount
-            <div className="w-full h-full flex flex-col items-center justify-center gap-4 animate-bounce">
-              {/* Explosion Effect */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="text-6xl md:text-8xl animate-ping">✨</div>
-              </div>
 
-              {/* Discount Badge */}
-              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-full w-40 h-40 md:w-56 md:h-56 flex flex-col items-center justify-center shadow-2xl border-8 border-yellow-400 relative z-10">
-                <div className="text-6xl md:text-8xl font-black text-yellow-300">
-                  {discount}%
+            {/* Click Counter */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+              <div className="text-center">
+                <div className="text-white font-bold text-sm md:text-lg">
+                  {clickCount}/{CLICKS_NEEDED}
                 </div>
-                <div className="text-white font-bold text-lg md:text-2xl text-center mt-2">
-                  OFF
-                </div>
-                <div className="text-white font-semibold text-sm md:text-base text-center mt-2">
-                  ALL ITEMS
+                <div className="text-white font-bold text-xs md:text-sm">
+                  CLICK ME!
                 </div>
               </div>
-
-              {/* Confetti Animation */}
-              <style>{`
-                @keyframes confetti {
-                  0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
-                  100% { transform: translateY(100vh) rotateZ(720deg); opacity: 0; }
-                }
-              `}</style>
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute w-2 h-2 rounded-full"
-                  style={{
-                    left: '50%',
-                    top: '50%',
-                    backgroundColor: ['#ff0000', '#00ff00', '#ffff00', '#0000ff'][i % 4],
-                    animation: `confetti ${1 + Math.random() * 1}s ease-in forwards`,
-                    animationDelay: `${Math.random() * 0.2}s`,
-                    marginLeft: `${(Math.random() - 0.5) * 200}px`,
-                    marginTop: `${(Math.random() - 0.5) * 200}px`
-                  }}
-                />
-              ))}
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          // Opened Gift - Show Discount
+          <div className="flex flex-col items-center justify-center gap-4 animate-bounce">
+            {/* Explosion Effect */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div className="text-6xl md:text-8xl animate-ping">✨</div>
+            </div>
+
+            {/* Discount Badge */}
+            <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-full w-40 h-40 md:w-56 md:h-56 flex flex-col items-center justify-center shadow-2xl border-8 border-yellow-400 relative z-10">
+              <div className="text-6xl md:text-8xl font-black text-yellow-300">
+                {discount}%
+              </div>
+              <div className="text-white font-bold text-lg md:text-2xl text-center mt-2">
+                OFF
+              </div>
+              <div className="text-white font-semibold text-sm md:text-base text-center mt-2">
+                ALL ITEMS
+              </div>
+            </div>
+
+            {/* Confetti Animation */}
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-2 h-2 rounded-full"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  backgroundColor: ['#ff0000', '#00ff00', '#ffff00', '#0000ff'][i % 4],
+                  animation: `confetti ${1 + Math.random() * 1}s ease-in forwards`,
+                  animationDelay: `${Math.random() * 0.2}s`,
+                  marginLeft: `${(Math.random() - 0.5) * 200}px`,
+                  marginTop: `${(Math.random() - 0.5) * 200}px`
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Close Button */}
         {isOpened && (
           <button
             onClick={handleClose}
-            className="mt-8 px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-red-50 transition shadow-lg text-lg md:text-xl"
+            className="absolute bottom-10 px-8 py-3 bg-white text-red-600 font-bold rounded-full hover:bg-red-50 transition shadow-lg text-lg md:text-xl"
           >
             Claim Discount! 🎉
           </button>
@@ -241,7 +263,7 @@ const ChristmasGiftModal = () => {
         {!isOpened && (
           <button
             onClick={handleClose}
-            className="mt-4 text-white text-sm md:text-base hover:text-yellow-300 transition underline"
+            className="absolute bottom-10 text-white text-sm md:text-base hover:text-yellow-300 transition underline"
           >
             Skip
           </button>

@@ -6,6 +6,7 @@ import { sendOtp, verifyOtp } from '../../services/newsletter';
 import { startSocialProof } from '../../utils/socialProof';
 import Type3D from '../../components/Type3D';
 import Footer from '../../components/Footer';
+import ChristmasCalendar from '../../components/ChristmasCalendar';
 import { PiHandSwipeLeftDuotone } from 'react-icons/pi';
 import { getItem as safeGetItem, setItem as safeSetItem, getItem } from '../../utils/safeStorage';
 
@@ -385,6 +386,9 @@ export default function HomeLanding(){
 
       {/* Feature cards */}
       <FeaturesCarousel />
+
+      {/* Christmas Advent Calendar */}
+      <ChristmasCalendar />
 
       {/* Featured products */}
       <FeaturedStrip />

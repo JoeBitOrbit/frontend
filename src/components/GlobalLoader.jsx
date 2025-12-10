@@ -1,8 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import Loader from './loader';
+import ChristmasStarLoader from './ChristmasStarLoader';
+import { useChristmas } from '../context/ChristmasContext';
 import { useLocation } from 'react-router-dom';
 
 export default function GlobalLoader(){
+  const { christmasMode } = useChristmas();
   const location = useLocation();
   const [visible, setVisible] = useState(true); // currently mounted & fading
   const [active, setActive] = useState(true);   // animation phase
@@ -90,6 +93,9 @@ export default function GlobalLoader(){
   }, [active, visible]);
 
   if(!visible) return null;
+  
+  if(christmasMode) return <ChristmasStarLoader />;
+  
   return (
     <div className={`n-loader-overlay ${active ? 'entering' : 'leaving'}`}>
       <div key={cycle} className="n-loader-wrapper">

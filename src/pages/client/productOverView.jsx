@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../components/loader";
+import ChristmasStarLoader from "../../components/ChristmasStarLoader";
 import ImageSlider from "../../components/imageSlider";
 import { addToCart, getCart } from "../../utils/cart";
 import { playCartJourneyAnimation, playStarSmash, playStarRain } from "../../utils/cardAnimations";
@@ -12,8 +13,10 @@ import { isAdminToken } from '../../utils/auth';
 import ProductCard from "../../components/productCard";
 import ConfirmModal from "../../components/ConfirmModal";
 import { getItem } from "../../utils/safeStorage.js";
+import { useChristmas } from "../../context/ChristmasContext";
 
 export default function ProductOverViewPage() {
+	const { christmasMode } = useChristmas();
 	const params = useParams();
 	const [product, setProduct] = useState(null);
 	const [reviewsData, setReviewsData] = useState({ reviews: [], total:0, page:1, pages:1, breakdown: {1:0,2:0,3:0,4:0,5:0} });
@@ -197,7 +200,7 @@ export default function ProductOverViewPage() {
 	// render
 	return (
 		<div className="w-full min-h-screen bg-white text-black">
-			{status === "loading" && <Loader />}
+			{status === "loading" && (christmasMode ? <ChristmasStarLoader /> : <Loader />)}
 			{status === "success" && (
 				<div className="w-full h-full flex flex-col">
 				{/* Image Section - Full Width */}

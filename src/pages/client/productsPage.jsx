@@ -3,9 +3,11 @@ import { useEffect, useState, useMemo, useRef } from "react";
 import { useSearchParams } from 'react-router-dom';
 import toast from "react-hot-toast";
 import Loader from "../../components/loader";
+import ChristmasStarLoader from "../../components/ChristmasStarLoader";
 import ProductCard from "../../components/productCard";
 import ProductSkeleton from "../../components/productSkeleton";
 import Footer from "../../components/Footer";
+import { useChristmas } from "../../context/ChristmasContext";
 import { FiShoppingBag } from "react-icons/fi";
 
 function ProductsLoader({ fadeOut, products }) {
@@ -145,6 +147,7 @@ function ProductsLoader({ fadeOut, products }) {
 }
 
 export default function ProductsPage() {
+	const { christmasMode } = useChristmas();
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [fadeLoader, setFadeLoader] = useState(false);
@@ -193,7 +196,7 @@ export default function ProductsPage() {
 
 	return (
 		<div className="w-full h-full flex flex-col bg-white">
-			{loading && <ProductsLoader fadeOut={fadeLoader} products={products} />}
+			{loading && (christmasMode ? <ChristmasStarLoader /> : <ProductsLoader fadeOut={fadeLoader} products={products} />)}
 			<div className="w-full px-6 py-6 flex flex-col md:flex-row gap-4 md:items-center md:justify-between bg-white border-b border-gray-200">
 				<div className="flex flex-col md:flex-row gap-4 md:items-center">
 					<input

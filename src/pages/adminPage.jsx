@@ -15,11 +15,13 @@ import OrdersPageAdmin from "./admin/ordersPageAdmin";
 import UsersAdmin from './admin/usersAdmin';
 import SettingsAdmin from './admin/settingsAdmin';
 import ChristmasSettingsAdmin from './admin/christmasSettingsAdmin';
+import ChristmasStarLoader from '../components/ChristmasStarLoader';
 import DashboardAdmin from './admin/dashboardAdmin';
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { getItem } from "../utils/safeStorage.js";
+import { useChristmas } from '../context/ChristmasContext';
 
 function MatrixRainLoader({ fadeOut }) {
     const canvasRef = useRef(null);
@@ -86,6 +88,7 @@ function MatrixRainLoader({ fadeOut }) {
 }
 
 export default function AdminPage() {
+    const { christmasMode } = useChristmas();
     const navigate = useNavigate();
     const [adminValidated, setAdminValidated] = useState(false);
     const [showLoader, setShowLoader] = useState(true);
@@ -123,7 +126,7 @@ export default function AdminPage() {
 
     return (
         <div className="w-full h-screen flex bg-white text-black overflow-hidden">
-            {showLoader && <MatrixRainLoader fadeOut={fadeLoader} />}
+            {showLoader && (christmasMode ? <ChristmasStarLoader /> : <MatrixRainLoader fadeOut={fadeLoader} />)}
             {adminValidated ? <>
                 <div className="w-[300px] h-full flex flex-col items-center bg-white text-black shadow-2xl border-r border-gray-300 relative">
                     <span className="text-3xl admin-heading font-extrabold my-6 tracking-wide text-black relative z-10">Admin Panel</span>

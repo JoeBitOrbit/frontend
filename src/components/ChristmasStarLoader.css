@@ -1,0 +1,47 @@
+.christmas-star-loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  background: linear-gradient(135deg, #1a0a0a 0%, #2d0a0a 50%, #1a0a0a 100%);
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+}
+
+.christmas-star-loader svg {
+  max-height: 60vh;
+  overflow: visible;
+}
+
+.christmas-star-loader path {
+  fill: #dc2626;
+  stroke: #dc2626;
+  stroke-width: 0.2;
+  transform: scale(0);
+  transform-origin: 50% 50%;
+  animation: christmas-star 8s ease-in-out infinite;
+  animation-delay: calc(var(--no) * 0.025s);
+  transform-box: fill-box;
+}
+
+@keyframes christmas-star {
+  0% {
+    transform: scale(0);
+    animation-timing-function: cubic-bezier(0.74, 1.72, 0.57, 1.01);
+  }
+  10% {
+    transform: scale(1);
+  }
+  65% {
+    transform: translateY(0px) scale(1);
+  }
+  75% {
+    transform: translateY(50px) scale(0);
+  }
+  100% {
+    transform: translateY(0px) scale(0);
+  }
+}
