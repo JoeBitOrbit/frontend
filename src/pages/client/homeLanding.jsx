@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import ImageSlider from '../../components/imageSlider';
@@ -13,6 +13,7 @@ import GiftFinder from '../../components/GiftFinder';
 import LimitedSpots from '../../components/LimitedSpots';
 import { PiHandSwipeLeftDuotone } from 'react-icons/pi';
 import { getItem as safeGetItem, setItem as safeSetItem, getItem } from '../../utils/safeStorage';
+import { ChristmasContext } from '../../context/ChristmasContext';
 
 const slideImages = ['/slide1.jpg','/slide2.jpg','/slide3.jpg'];
 
@@ -344,6 +345,7 @@ function FeaturedStrip(){
 }
 
 export default function HomeLanding(){
+  const { christmasMode } = useContext(ChristmasContext);
   const calendarRef = useRef(null);
   
   useEffect(()=>{ const stop = startSocialProof(15000); return ()=> stop && stop(); }, []);
@@ -408,31 +410,39 @@ export default function HomeLanding(){
       {/* Feature cards */}
       <FeaturesCarousel />
 
-      {/* Countdown Timer */}
-      <CountdownBanner />
+      {/* Countdown Timer - Only in Christmas Mode */}
+      {christmasMode && <CountdownBanner />}
 
       {/* Featured products */}
       <FeaturedStrip />
 
-      {/* Christmas Advent Calendar */}
-      <div ref={calendarRef}>
-        <ChristmasCalendar />
-      </div>
+      {/* Christmas Advent Calendar - Only in Christmas Mode */}
+      {christmasMode && (
+        <div ref={calendarRef}>
+          <ChristmasCalendar />
+        </div>
+      )}
 
-      {/* Spin the Wheel */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        <SpinTheWheel />
-      </div>
+      {/* Spin the Wheel - Only in Christmas Mode */}
+      {christmasMode && (
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+          <SpinTheWheel />
+        </div>
+      )}
 
-      {/* Gift Finder */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        <GiftFinder />
-      </div>
+      {/* Gift Finder - Only in Christmas Mode */}
+      {christmasMode && (
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+          <GiftFinder />
+        </div>
+      )}
 
-      {/* Limited Spots Contest */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        <LimitedSpots />
-      </div>
+      {/* Limited Spots Contest - Only in Christmas Mode */}
+      {christmasMode && (
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+          <LimitedSpots />
+        </div>
+      )}
 
       {/* Testimonials */}
       <TestimonialsCarousel />

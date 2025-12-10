@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { ChristmasContext } from '../context/ChristmasContext';
 import './SpinTheWheel.css';
 
 export default function SpinTheWheel() {
+  const { christmasMode } = useContext(ChristmasContext);
   const [isSpinning, setIsSpinning] = useState(false);
   const [wheelRotation, setWheelRotation] = useState(0);
   const [winCode, setWinCode] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  if (!christmasMode) return null;
 
   const prizes = [
     { label: '5% OFF', color: '#ff6b6b' },
@@ -16,7 +20,7 @@ export default function SpinTheWheel() {
     { label: '20% OFF', color: '#f06595' },
     { label: '25% OFF', color: '#d6336c' },
     { label: 'FREE SHIP', color: '#b197fc' },
-    { label: '$10 GIFT', color: '#7950f2' },
+    { label: '₨500 GIFT', color: '#7950f2' },
     { label: 'SPIN AGAIN', color: '#4c6ef5' }
   ];
 

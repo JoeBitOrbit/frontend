@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ChristmasContext } from '../context/ChristmasContext';
 import './SurprisePopup.css';
 
 export default function SurprisePopup() {
+  const { christmasMode } = useContext(ChristmasContext);
   const [popups, setPopups] = useState([]);
+
+  if (!christmasMode) return null;
 
   const popupMessages = [
     {
@@ -13,7 +17,7 @@ export default function SurprisePopup() {
     },
     {
       title: '🎁 Free Gift',
-      message: 'Free shipping on orders over $50',
+      message: 'Free shipping on orders over ₨5,000',
       code: 'SHIPFREE',
       trigger: 'scroll'
     },

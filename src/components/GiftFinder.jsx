@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { ChristmasContext } from '../context/ChristmasContext';
 import './GiftFinder.css';
 
 export default function GiftFinder() {
+  const { christmasMode } = useContext(ChristmasContext);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({
     recipient: null,
@@ -13,6 +15,8 @@ export default function GiftFinder() {
   });
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  if (!christmasMode) return null;
 
   const questions = [
     {
@@ -28,7 +32,7 @@ export default function GiftFinder() {
     {
       question: 'Budget?',
       key: 'priceRange',
-      options: ['Under $50', '$50-100', '$100-200', '200+']
+      options: ['Under ₨5,000', '₨5,000-10,000', '₨10,000-20,000', '₨20,000+']
     },
     {
       question: 'Size preference?',

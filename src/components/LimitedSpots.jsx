@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { ChristmasContext } from '../context/ChristmasContext';
 import './LimitedSpots.css';
 
 export default function LimitedSpots() {
+  const { christmasMode } = useContext(ChristmasContext);
   const [spotsData, setSpotsData] = useState({ spotsRemaining: 0, spotsTotal: 100 });
   const [loading, setLoading] = useState(false);
   const [entered, setEntered] = useState(false);
   const [winner, setWinner] = useState(null);
+
+  if (!christmasMode) return null;
 
   useEffect(() => {
     fetchSpots();

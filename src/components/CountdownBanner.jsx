@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { ChristmasContext } from '../context/ChristmasContext';
 import './CountdownBanner.css';
 
 export default function CountdownBanner() {
+  const { christmasMode } = useContext(ChristmasContext);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0
   });
+
+  if (!christmasMode) return null;
 
   useEffect(() => {
     const calculateTimeLeft = () => {
