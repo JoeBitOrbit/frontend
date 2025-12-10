@@ -30,6 +30,7 @@ function AppContent() {
 		<GoogleOAuthProvider clientId={clientId}>
 			{christmasMode && <Snowflakes />}
 			<ChristmasGiftModal />
+			<SurprisePopup />
 			<div className="w-full h-screen flex justify-center items-center text-secondary overflow-hidden transition-all duration-500 bg-primary">
 				<Toaster position="top-right" />
 				<Routes>

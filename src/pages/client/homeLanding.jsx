@@ -7,6 +7,10 @@ import { startSocialProof } from '../../utils/socialProof';
 import Type3D from '../../components/Type3D';
 import Footer from '../../components/Footer';
 import ChristmasCalendar from '../../components/ChristmasCalendar';
+import CountdownBanner from '../../components/CountdownBanner';
+import SpinTheWheel from '../../components/SpinTheWheel';
+import GiftFinder from '../../components/GiftFinder';
+import LimitedSpots from '../../components/LimitedSpots';
 import { PiHandSwipeLeftDuotone } from 'react-icons/pi';
 import { getItem as safeGetItem, setItem as safeSetItem, getItem } from '../../utils/safeStorage';
 
@@ -404,13 +408,31 @@ export default function HomeLanding(){
       {/* Feature cards */}
       <FeaturesCarousel />
 
+      {/* Countdown Timer */}
+      <CountdownBanner />
+
+      {/* Featured products */}
+      <FeaturedStrip />
+
       {/* Christmas Advent Calendar */}
       <div ref={calendarRef}>
         <ChristmasCalendar />
       </div>
 
-      {/* Featured products */}
-      <FeaturedStrip />
+      {/* Spin the Wheel */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <SpinTheWheel />
+      </div>
+
+      {/* Gift Finder */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <GiftFinder />
+      </div>
+
+      {/* Limited Spots Contest */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
+        <LimitedSpots />
+      </div>
 
       {/* Testimonials */}
       <TestimonialsCarousel />
