@@ -15,7 +15,23 @@ export function ChristmasProvider({ children }) {
         setDiscount(response.data.discount);
         localStorage.setItem('christmasMode', JSON.stringify(response.data));
       } catch (error) {
-        console.log('Could not fetch Christmas status');
+        console.log('Could not fetch Christmas status, checking localStorage');
+        const stored = localStorage.getItem('christmasMode');
+        if (stored) {
+          try {
+            const data = JSON.parse(stored);
+            setChristmasMode(data.enabled);
+            setDiscount(data.discount);
+          } catch (e) {
+            // Default to Christmas mode enabled for development
+            setChristmasMode(true);
+            setDiscount(25);
+          }
+        } else {
+          // Default to Christmas mode enabled for development
+          setChristmasMode(true);
+          setDiscount(25);
+        }
       }
     };
 
