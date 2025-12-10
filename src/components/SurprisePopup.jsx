@@ -2,11 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ChristmasContext } from '../context/ChristmasContext';
 import './SurprisePopup.css';
 
-export default function SurprisePopup() {
-  const { christmasMode } = useContext(ChristmasContext);
+function SurprisePopupContent() {
   const [popups, setPopups] = useState([]);
-
-  if (!christmasMode) return null;
 
   const popupMessages = [
     {
@@ -122,4 +119,12 @@ export default function SurprisePopup() {
       ))}
     </div>
   );
+}
+
+export default function SurprisePopup() {
+  const { christmasMode } = useContext(ChristmasContext);
+  
+  if (!christmasMode) return null;
+  
+  return <SurprisePopupContent />;
 }

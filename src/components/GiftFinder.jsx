@@ -4,8 +4,7 @@ import toast from 'react-hot-toast';
 import { ChristmasContext } from '../context/ChristmasContext';
 import './GiftFinder.css';
 
-export default function GiftFinder() {
-  const { christmasMode } = useContext(ChristmasContext);
+function GiftFinderContent() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({
     recipient: null,
@@ -15,8 +14,6 @@ export default function GiftFinder() {
   });
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  if (!christmasMode) return null;
 
   const questions = [
     {
@@ -170,4 +167,12 @@ export default function GiftFinder() {
       </div>
     </div>
   );
+}
+
+export default function GiftFinder() {
+  const { christmasMode } = useContext(ChristmasContext);
+  
+  if (!christmasMode) return null;
+  
+  return <GiftFinderContent />;
 }

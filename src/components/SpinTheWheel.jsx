@@ -4,14 +4,11 @@ import axios from 'axios';
 import { ChristmasContext } from '../context/ChristmasContext';
 import './SpinTheWheel.css';
 
-export default function SpinTheWheel() {
-  const { christmasMode } = useContext(ChristmasContext);
+function SpinTheWheelContent() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [wheelRotation, setWheelRotation] = useState(0);
   const [winCode, setWinCode] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  if (!christmasMode) return null;
 
   const prizes = [
     { label: '5% OFF', color: '#ff6b6b' },
@@ -133,4 +130,12 @@ export default function SpinTheWheel() {
       )}
     </>
   );
+}
+
+export default function SpinTheWheel() {
+  const { christmasMode } = useContext(ChristmasContext);
+  
+  if (!christmasMode) return null;
+  
+  return <SpinTheWheelContent />;
 }

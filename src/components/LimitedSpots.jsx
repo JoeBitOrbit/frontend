@@ -4,14 +4,11 @@ import toast from 'react-hot-toast';
 import { ChristmasContext } from '../context/ChristmasContext';
 import './LimitedSpots.css';
 
-export default function LimitedSpots() {
-  const { christmasMode } = useContext(ChristmasContext);
+function LimitedSpotsContent() {
   const [spotsData, setSpotsData] = useState({ spotsRemaining: 0, spotsTotal: 100 });
   const [loading, setLoading] = useState(false);
   const [entered, setEntered] = useState(false);
   const [winner, setWinner] = useState(null);
-
-  if (!christmasMode) return null;
 
   useEffect(() => {
     fetchSpots();
@@ -148,4 +145,12 @@ export default function LimitedSpots() {
       </div>
     </div>
   );
+}
+
+export default function LimitedSpots() {
+  const { christmasMode } = useContext(ChristmasContext);
+  
+  if (!christmasMode) return null;
+  
+  return <LimitedSpotsContent />;
 }
