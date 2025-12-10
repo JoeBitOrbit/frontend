@@ -97,28 +97,27 @@ export default function Header() {
 							<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/christmas-offers') }}>
 								<FaGift className="text-red-600 text-2xl mr-2" /> Christmas Offers
 							</button>
-						</button>
-						<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/cart') }}>
-							<FiShoppingBag className="text-red-600 text-2xl mr-2" /> Cart
+							<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/cart') }}>
+								<FiShoppingBag className="text-red-600 text-2xl mr-2" /> Cart
 							</button>
-						<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/wishlist') }}>
-							<FaRegHeart className="text-red-600 text-2xl mr-2" /> Wishlist
-						</button>
-						<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/reviews') }}>
-							<MdOutlineReviews className="text-red-600 text-2xl mr-2" /> Reviews
-						</button>
-						<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/about-us') }}>
-							<IoMdInformationCircleOutline className="text-red-600 text-2xl mr-2" /> About Us
-						</button>
-					<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/contact-us') }}>
-						<IoMdContact className="text-red-600 text-2xl mr-2" /> Contact Us
-					</button>
-					{isAdmin && (
-						<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/admin/products') }}>
-							<MdAdminPanelSettings className="text-red-600 text-2xl mr-2" /> Admin Panel
-						</button>
-					)}
-					<div className="border-t border-gray-200 w-full pt-5 mt-3">
+							<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/wishlist') }}>
+								<FaRegHeart className="text-red-600 text-2xl mr-2" /> Wishlist
+							</button>
+							<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/reviews') }}>
+								<MdOutlineReviews className="text-red-600 text-2xl mr-2" /> Reviews
+							</button>
+							<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/about-us') }}>
+								<IoMdInformationCircleOutline className="text-red-600 text-2xl mr-2" /> About Us
+							</button>
+							<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/contact-us') }}>
+								<IoMdContact className="text-red-600 text-2xl mr-2" /> Contact Us
+							</button>
+							{isAdmin && (
+								<button className="text-black hover:text-red-600 text-lg flex flex-row items-center" onClick={()=>{ setIsOpen(false); navigate('/admin/products') }}>
+									<MdAdminPanelSettings className="text-red-600 text-2xl mr-2" /> Admin Panel
+								</button>
+							)}
+							<div className="border-t border-gray-200 w-full pt-5 mt-3">
 								{!token && <button className="text-red-600 hover:text-red-700 text-lg font-semibold" onClick={()=>{navigate('/login'); setIsOpen(false)}}>Login</button>}
 								{token && <button className="text-red-600 hover:text-red-700 text-lg font-semibold" onClick={()=>{removeItem('token'); removeItem('role'); setToken(null); navigate('/login'); setIsOpen(false)}}>Logout</button>}
 							</div>
