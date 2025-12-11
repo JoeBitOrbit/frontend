@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { HolidayContext } from '../../context/HolidayContext';
 import SpinTheWheel from '../../components/SpinTheWheel';
-import GiftFinder from '../../components/GiftFinder';
 import LimitedSpots from '../../components/LimitedSpots';
 import CountdownBanner from '../../components/CountdownBanner';
 import ChristmasCalendar from '../../components/ChristmasCalendar';
@@ -59,9 +58,9 @@ export default function ChristmasOffersPage() {
     },
     {
       icon: <FaStar className="text-4xl" />,
-      title: 'Gift Finder',
-      description: 'AI-powered quiz to find perfect gifts within your budget',
-      color: 'from-yellow-400 to-orange-500'
+      title: 'Advent Calendar',
+      description: 'Open daily doors for exclusive surprises December 1-25',
+      color: 'from-green-500 to-emerald-500'
     },
     {
       icon: <FaWineGlass className="text-4xl" />,
@@ -72,7 +71,7 @@ export default function ChristmasOffersPage() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-gradient-to-b from-red-50 via-white to-red-50 overflow-hidden">
+    <div className="w-full min-h-screen bg-gradient-to-b from-red-50 via-white to-red-50 overflow-y-auto">
       {/* Confetti Animation */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
         {confetti.map(item => (
@@ -246,20 +245,6 @@ export default function ChristmasOffersPage() {
 
           {activeTab === 'help' && (
             <div className="space-y-8">
-              {/* Gift Finder */}
-              <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 border-4 border-yellow-200">
-                <div className="flex items-center gap-4 mb-6">
-                  <FaGift className="text-4xl text-yellow-600" />
-                  <h2 className="text-3xl md:text-4xl font-black text-yellow-600">
-                    🎁 Gift Finder Quiz
-                  </h2>
-                </div>
-                <p className="text-gray-700 mb-8 text-lg">
-                  Not sure what to gift? Let our AI quiz guide you! Answer 4 simple questions about the recipient and get personalized gift recommendations with prices within your budget.
-                </p>
-                <GiftFinder />
-              </div>
-
               {/* Help Section */}
               <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-3xl shadow-2xl p-8 md:p-12 text-white">
                 <h2 className="text-3xl font-bold mb-6">❓ FAQ & Help</h2>

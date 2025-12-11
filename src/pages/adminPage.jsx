@@ -5,7 +5,6 @@ import { IoPeople } from "react-icons/io5";
 import { IoSettings } from "react-icons/io5";
 import { MdOutlineMail, MdAdminPanelSettings } from 'react-icons/md';
 import { BiCategory } from 'react-icons/bi';
-import { FaRegSnowflake } from "react-icons/fa";
 import ProductsAdminPage from "./admin/productsAdminPage";
 import AddProductPage from "./admin/addProductAdminPage";
 import UpdateProductPage from "./admin/updateProduct";
@@ -14,7 +13,6 @@ import CategoriesAdmin from './admin/categoriesAdmin';
 import OrdersPageAdmin from "./admin/ordersPageAdmin";
 import UsersAdmin from './admin/usersAdmin';
 import SettingsAdmin from './admin/settingsAdmin';
-import ChristmasSettingsAdmin from './admin/christmasSettingsAdmin';
 import ChristmasStarLoader from '../components/ChristmasStarLoader';
 import DashboardAdmin from './admin/dashboardAdmin';
 import { useEffect, useState, useRef } from "react";
@@ -147,9 +145,6 @@ export default function AdminPage() {
                         <Link className="flex flex-row h-[60px] w-full border-t border-gray-300 px-6 items-center text-md gap-4 text-black hover:bg-red-600 hover:text-white hover:border-l-4 hover:border-l-red-500 transition-all" to="/admin/settings">
                             <IoSettings className="text-red-400 text-xl"/> <span className="font-medium">Settings</span>
                         </Link>
-                        <Link className="flex flex-row h-[60px] w-full border-t border-gray-300 px-6 items-center text-md gap-4 text-black hover:bg-red-600 hover:text-white hover:border-l-4 hover:border-l-red-500 transition-all" to="/admin/christmas">
-                            <FaRegSnowflake className="text-blue-400 text-xl"/> <span className="font-medium">Christmas</span>
-                        </Link>
                         <Link className="flex flex-row h-[60px] w-full border-t border-gray-300 px-6 items-center text-md gap-4 text-black hover:bg-red-600 hover:text-white hover:border-l-4 hover:border-l-red-500 transition-all" to="/admin/categories">
                             <BiCategory className="text-red-400 text-xl"/> <span className="font-medium">Categories</span>
                         </Link>
@@ -169,7 +164,6 @@ export default function AdminPage() {
                         <Route path="/categories" element={<CategoriesAdmin />} />
                         <Route path="/users" element={<UsersAdmin />} />
                         <Route path="/settings" element={<SettingsAdmin />} />
-                        <Route path="/christmas" element={<ChristmasSettingsAdmin />} />
                     </Routes>
                 </div>
             </> : null}
