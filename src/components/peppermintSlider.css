@@ -1,0 +1,262 @@
+/* Peppermint Range Slider Styles */
+.peppermint-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.peppermint-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fca5a5;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.peppermint-value {
+  min-width: 40px;
+  text-align: right;
+  background: rgba(220, 38, 38, 0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #fca5a5;
+  font-weight: bold;
+  font-size: 0.875rem;
+  border: 1px solid rgba(220, 38, 38, 0.4);
+}
+
+/* Main Peppermint Slider Styles */
+.pm {
+  --gradient1:
+    linear-gradient(
+      hsla(0,0%,100%,0) 0.1em,
+      hsla(0,0%,100%,0.3) 0.2em 0.25em,
+      hsla(0,0%,100%,0) 0.35em 0.5em,
+      hsla(0,0%,100%,0.2) 0.55em 0.6em,
+      hsla(0,0%,100%,0) 0.65em
+    );
+  --gradient2:
+    repeating-linear-gradient(
+      135deg,
+      var(--red) 0 0.48em,
+      #ffffff 0.5em 0.98em,
+      var(--red) 1em 1.08em,
+      #ffffff 1.1em 1.18em,
+      var(--red) 1.2em 1.28em,
+      #ffffff 1.3em 1.38em,
+      var(--red) 1.4em 1.48em,
+      #ffffff 1.5em 1.98em,
+      var(--red) 2em
+    );
+  --red: #dc2626;
+  --percent: 50%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  height: 1.5em;
+  margin: 0;
+}
+
+.pm__input {
+  background-color: transparent;
+  border-radius: 0.375em;
+  width: inherit;
+  height: 0.75em;
+  -webkit-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.pm__input:focus {
+  outline: transparent;
+}
+
+/* WebKit handle */
+.pm__input::-webkit-slider-thumb {
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Firefox handle */
+.pm__input::-moz-range-thumb {
+  background-color: transparent;
+  border: 0;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+}
+
+/* Firefox track */
+.pm__input::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+/* Main styles continued */
+.pm:before {
+  background: var(--gradient1), rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0.05em 0.05em rgba(0, 0, 0, 0.3) inset,
+    0 -0.05em 0.05em rgba(0, 0, 0, 0.3) inset,
+    0 0 0.25em rgba(0, 0, 0, 0.4) inset,
+    0 0.25em 0.15em rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.pm:before,
+.pm__input-fill,
+.pm__input-fill:before,
+.pm__input-handle-bg,
+.pm__input-handle-bg:before,
+.pm__input-handle-circle,
+.pm__input-handle-shadow {
+  display: block;
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+}
+
+.pm:before,
+.pm__input-fill:before,
+.pm__input-handle-bg:before {
+  content: "";
+}
+
+.pm:before,
+.pm__input-fill {
+  border-radius: 0.375em;
+  top: 0.375em;
+  width: 100%;
+  height: 0.75em;
+}
+
+.pm__input-fill {
+  overflow: hidden;
+}
+
+.pm__input-fill:before {
+  background: var(--gradient2);
+  width: 100%;
+  height: 100%;
+  transform: translateX(calc(-100% + var(--percent)));
+}
+
+.pm__input-handle-bg,
+.pm__input-handle-bg:before,
+.pm__input-handle-circle,
+.pm__input-handle-shadow {
+  border-radius: 50%;
+  top: 0;
+}
+
+.pm__input-handle-bg,
+.pm__input-handle-shadow {
+  left: var(--percent);
+  margin-left: -0.375em;
+  width: 1.5em;
+  height: 1.5em;
+  z-index: 2;
+}
+
+.pm__input-handle-bg,
+.pm__input-handle-bg:before {
+  transition: transform 0.3s ease-in-out;
+}
+
+.pm__input-handle-bg {
+  background-color: var(--red);
+  overflow: hidden;
+}
+
+.pm__input-handle-bg:before {
+  box-shadow:
+    0 0 0.1em 0.1em rgba(0, 0, 0, 1) inset,
+    0 0.1em 0.05em 0.1em rgba(255, 255, 255, 1) inset;
+  opacity: 0.4;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.pm__input-handle-circle {
+  box-shadow: -0.375em 0.1em 0 inset;
+  color: #ffffff;
+  top: auto;
+  bottom: 50%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 100%;
+}
+
+.pm__input-handle-circle:nth-child(2) { transform: rotate(60deg); }
+.pm__input-handle-circle:nth-child(3) { transform: rotate(120deg); }
+.pm__input-handle-circle:nth-child(4) { transform: rotate(180deg); }
+.pm__input-handle-circle:nth-child(5) { transform: rotate(240deg); }
+.pm__input-handle-circle:nth-child(6) { transform: rotate(300deg); }
+
+.pm__input-handle-shadow {
+  box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.3);
+}
+
+.pm__sr {
+  clip: rect(1px, 1px, 1px, 1px);
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+
+/* focus/hover state */
+.pm__input:focus ~ .pm__input-handle-bg,
+.pm__input:hover ~ .pm__input-handle-bg {
+  transform: rotate(0.25turn);
+}
+
+.pm__input:focus ~ .pm__input-handle-bg:before,
+.pm__input:hover ~ .pm__input-handle-bg:before {
+  transform: rotate(-0.25turn);
+}
+
+/* `:focus-visible` support */
+@supports selector(:focus-visible) {
+  .pm__input:focus ~ .pm__input-handle-bg,
+  .pm__input:focus ~ .pm__input-handle-bg:before {
+    transform: rotate(0);
+  }
+  .pm__input:focus-visible ~ .pm__input-handle-bg,
+  .pm__input:hover ~ .pm__input-handle-bg {
+    transform: rotate(0.25turn);
+  }
+  .pm__input:focus-visible ~ .pm__input-handle-bg:before,
+  .pm__input:hover ~ .pm__input-handle-bg:before {
+    transform: rotate(-0.25turn);
+  }
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .pm {
+    height: 1.2em;
+  }
+  
+  .peppermint-wrapper {
+    flex-wrap: wrap;
+  }
+  
+  .peppermint-label {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+}

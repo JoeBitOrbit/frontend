@@ -3,6 +3,7 @@ import { getItem as safeGetItem, setItem as safeSetItem } from '../../utils/safe
 import { createPromo, listPromos, sendBroadcast } from '../../services/newsletter';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
+import PeppermintSlider from '../../components/PeppermintSlider';
 
 export default function SettingsAdmin(){
   const [saving,setSaving] = useState(false);
@@ -142,14 +143,13 @@ export default function SettingsAdmin(){
 
             {/* Christmas Discount */}
             <div>
-              <label className='text-sm font-semibold text-white block mb-2'>Christmas Discount (%)</label>
-              <input 
-                type='number' 
-                min='0' 
-                max='100' 
-                value={christmasDiscount} 
-                onChange={e=> setChristmasDiscount(Number(e.target.value))} 
-                className='w-full h-10 rounded-md bg-white border-2 border-red-400 outline-none px-3 text-black font-bold text-lg'
+              <PeppermintSlider 
+                value={christmasDiscount}
+                onChange={setChristmasDiscount}
+                min={0}
+                max={100}
+                label="Christmas Discount (%)"
+                accentColor="#dc2626"
               />
               <p className='text-xs text-red-200 mt-1'>Applied to all products</p>
             </div>
@@ -233,8 +233,8 @@ export default function SettingsAdmin(){
 
               {/* Limited Spots */}
               <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-2'>Limited Spots Contest</label>
-                <div className='flex gap-2 mb-2'>
+                <label className='text-sm font-semibold text-white block mb-3'>Limited Spots Contest</label>
+                <div className='flex gap-2 mb-3'>
                   <button 
                     onClick={() => setLimitedSpotsEnabled(true)}
                     className={`flex-1 py-1 rounded text-sm font-semibold ${limitedSpotsEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
@@ -248,13 +248,13 @@ export default function SettingsAdmin(){
                     OFF
                   </button>
                 </div>
-                <input 
-                  type='number' 
-                  min='1' 
-                  value={limitedSpotCount} 
-                  onChange={e=> setLimitedSpotCount(Number(e.target.value))}
-                  className='w-full h-8 rounded px-2 text-black text-sm'
-                  placeholder='Daily spots'
+                <PeppermintSlider 
+                  value={limitedSpotCount}
+                  onChange={setLimitedSpotCount}
+                  min={1}
+                  max={500}
+                  label="Daily Spots"
+                  accentColor="#ea580c"
                 />
               </div>
 
@@ -285,8 +285,8 @@ export default function SettingsAdmin(){
 
               {/* Surprise Popups */}
               <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-2'>Surprise Popups</label>
-                <div className='flex gap-2 mb-2'>
+                <label className='text-sm font-semibold text-white block mb-3'>Surprise Popups</label>
+                <div className='flex gap-2 mb-3'>
                   <button 
                     onClick={() => setSurprisePopupEnabled(true)}
                     className={`flex-1 py-1 rounded text-sm font-semibold ${surprisePopupEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
@@ -300,17 +300,14 @@ export default function SettingsAdmin(){
                     OFF
                   </button>
                 </div>
-                <div className='flex gap-1 items-center'>
-                  <label className='text-xs text-red-200'>Trigger every</label>
-                  <input 
-                    type='number' 
-                    min='1' 
-                    value={surprisePopupFrequency} 
-                    onChange={e=> setSurprisePopupFrequency(Number(e.target.value))}
-                    className='w-16 h-8 rounded px-2 text-black text-sm'
-                  />
-                  <label className='text-xs text-red-200'>mins</label>
-                </div>
+                <PeppermintSlider 
+                  value={surprisePopupFrequency}
+                  onChange={setSurprisePopupFrequency}
+                  min={1}
+                  max={60}
+                  label="Trigger every (minutes)"
+                  accentColor="#ec4899"
+                />
               </div>
 
               {/* Advent Calendar */}
