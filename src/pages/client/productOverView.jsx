@@ -212,12 +212,18 @@ export default function ProductOverViewPage() {
 				</div>
 				
 				{/* Product Details Section */}
-				<div className="w-full max-w-6xl mx-auto flex flex-col px-6 md:px-10 py-8 gap-6">
-					<div className="flex items-center gap-2 text-sm text-gray-500">
+			<div className="w-full max-w-6xl mx-auto flex flex-col px-6 md:px-10 py-8 gap-6">
+				<div className="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
+					{Array.isArray(product.category) && product.category.length > 0 ? (
+						product.category.map((cat, idx) => (
+							<span key={idx} className="uppercase tracking-wide px-3 py-1 bg-gray-100 rounded-full text-xs font-semibold text-gray-700">
+								{cat}
+							</span>
+						))
+					) : (
 						<span className="uppercase tracking-wide">{product.category || 'ALL'}</span>
-					</div>
-					
-					<h1 className="text-4xl font-bold text-black uppercase tracking-wide">
+					)}
+				</div>					<h1 className="text-4xl font-bold text-black uppercase tracking-wide">
 						{product.name}
 					</h1>
 					

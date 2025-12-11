@@ -254,12 +254,13 @@
 .header-nav {
 	display: none;
 	align-items: center;
-	gap: 2px;
+	justify-content: center;
+	gap: 0;
 	padding: 0 32px;
 	border-top: 1px solid #f0f0f0;
 	overflow-x: auto;
 	scrollbar-width: none;
-	background: linear-gradient(to right, white 0%, white 95%, transparent 100%);
+	background: white;
 }
 
 .header-nav::-webkit-scrollbar {
@@ -274,7 +275,7 @@
 
 .nav-link {
 	white-space: nowrap;
-	padding: 16px 14px;
+	padding: 16px 16px;
 	font-size: 12px;
 	font-weight: 600;
 	color: #4b5563;
@@ -285,6 +286,9 @@
 	display: flex;
 	align-items: center;
 	gap: 6px;
+	flex: 1;
+	justify-content: center;
+	border-right: 1px solid #f0f0f0;
 }
 
 .nav-link:hover {
@@ -307,17 +311,18 @@
 }
 
 /* Special nav links */
-.nav-link.christmas-link {
+.nav-link.holiday-link {
 	color: #dc2626;
 	font-weight: 700;
 	background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(220, 38, 38, 0.05));
-	border-radius: 4px;
-	padding: 12px 14px;
-	margin: 0 4px;
+	border-radius: 0;
+	padding: 16px 16px;
+	margin: 0;
 	animation: pulse-subtle 2s ease-in-out infinite;
+	border-right: 1px solid #f0f0f0;
 }
 
-.nav-link.christmas-link:hover {
+.nav-link.holiday-link:hover {
 	background: rgba(220, 38, 38, 0.15);
 	color: #b91c1c;
 }
@@ -326,12 +331,14 @@
 	color: #7c3aed;
 	font-weight: 700;
 	background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
-	border-radius: 4px;
-	padding: 12px 14px;
-	margin: 0 4px;
+	border-radius: 0;
+	padding: 16px 16px;
+	margin: 0;
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 6px;
+	border-right: none;
 }
 
 .nav-link.admin-link:hover {

@@ -185,8 +185,8 @@ export default function AddProductPage() {
 	const [description, setDescription] = useState("");
 	const [stock, setStock] = useState(0);
 	const [isAvailable, setIsAvailable] = useState(true);
-	const [category, setCategory] = useState("");
 	const [categories, setCategories] = useState([]);
+	const [selectedCategories, setSelectedCategories] = useState([]);
 	const [showAnimation, setShowAnimation] = useState(false);
 	const [animationImage, setAnimationImage] = useState(null);
 	const [colorsEnabled, setColorsEnabled] = useState(false);
@@ -207,7 +207,7 @@ export default function AddProductPage() {
 				if (parsed.description) setDescription(parsed.description);
 				if (parsed.stock) setStock(parsed.stock);
 				if (parsed.isAvailable !== undefined) setIsAvailable(parsed.isAvailable);
-				if (parsed.category) setCategory(parsed.category);
+				if (parsed.categories && Array.isArray(parsed.categories)) setSelectedCategories(parsed.categories);
 				if (parsed.productId && parsed.productId !== '(auto)') setProductId(parsed.productId);
 				toast.success('Draft restored');
 			} catch (e) {
@@ -240,11 +240,11 @@ export default function AddProductPage() {
 			description,
 			stock,
 			isAvailable,
-			category,
+			categories: selectedCategories,
 			timestamp: Date.now()
 		};
 		setItem(DRAFT_KEY, JSON.stringify(draft));
-	}, [productId, productName, alternativeNames, labelledPrice, price, description, stock, isAvailable, category]);
+	}, [productId, productName, alternativeNames, labelledPrice, price, description, stock, isAvailable, selectedCategories]);
 
 	async function handleSubmit() {
 		try {
@@ -272,7 +272,7 @@ export default function AddProductPage() {
 				images: responses,
 				description: description || 'No description',
 				stock: Number(stock) || 0,
-				category: category || 'accessories',
+				category: selectedCategories.length > 0 ? selectedCategories : ['accessories'],
 				colors: [],
 				sizes: []
 		};		const token = getItem("token");
@@ -309,7 +309,7 @@ export default function AddProductPage() {
 			setDescription('');
 			setStock(0);
 			setIsAvailable(true);
-			setCategory('');
+			setSelectedCategories([]);
 			toast.success('Draft cleared');
 		}
 	}
@@ -344,14 +344,28 @@ export default function AddProductPage() {
 						<label className="text-xs">Name</label>
 						<input value={productName} onChange={(e) => setProductName(e.target.value)} className="w-full h-10 rounded-md bg-white border border-gray-300 px-3 mt-1 text-black" />
 					</div>
-					<div>
-						<label className="text-xs">Category</label>
-						<select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full h-10 rounded-md bg-white border border-gray-300 px-3 mt-1 text-black">
-							<option value="">None</option>
+					<div className="md:col-span-2">
+						<label className="text-xs block mb-2">Categories (Select Multiple)</label>
+						<div className="flex flex-wrap gap-2">
 							{categories.map((c) => (
-								<option key={c._id} value={c.slug}>{c.name}</option>
+								<label key={c._id} className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+									<input 
+										type="checkbox" 
+										checked={selectedCategories.includes(c.slug)}
+										onChange={(e) => {
+											if (e.target.checked) {
+												setSelectedCategories([...selectedCategories, c.slug]);
+											} else {
+												setSelectedCategories(selectedCategories.filter(cat => cat !== c.slug));
+											}
+										}}
+										className="w-4 h-4 cursor-pointer"
+									/>
+									<span className="text-sm text-black">{c.name}</span>
+								</label>
 							))}
-						</select>
+						</div>
+						{selectedCategories.length === 0 && <p className="text-xs text-gray-500 mt-2">At least one category is required</p>}
 					</div>
 					<div>
 						<label className="text-xs">Labelled Price</label>

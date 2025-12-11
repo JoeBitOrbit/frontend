@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import ImageSlider from '../../components/imageSlider';
@@ -6,11 +6,6 @@ import { sendOtp, verifyOtp } from '../../services/newsletter';
 import { startSocialProof } from '../../utils/socialProof';
 import Type3D from '../../components/Type3D';
 import Footer from '../../components/Footer';
-import ChristmasCalendar from '../../components/ChristmasCalendar';
-import CountdownBanner from '../../components/CountdownBanner';
-import SpinTheWheel from '../../components/SpinTheWheel';
-import GiftFinder from '../../components/GiftFinder';
-import LimitedSpots from '../../components/LimitedSpots';
 import { PiHandSwipeLeftDuotone } from 'react-icons/pi';
 import { getItem as safeGetItem, setItem as safeSetItem, getItem } from '../../utils/safeStorage';
 import { HolidayContext } from '../../context/HolidayContext';
@@ -346,23 +341,8 @@ function FeaturedStrip(){
 
 export default function HomeLanding(){
   const { holidayMode } = useContext(HolidayContext);
-  const calendarRef = useRef(null);
   
   useEffect(()=>{ const stop = startSocialProof(15000); return ()=> stop && stop(); }, []);
-  
-  // Listen for gift modal close event to scroll to calendar
-  useEffect(() => {
-    const handleGiftClose = () => {
-      if (calendarRef.current) {
-        setTimeout(() => {
-          calendarRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
-      }
-    };
-    
-    window.addEventListener('holidaygift:close', handleGiftClose);
-    return () => window.removeEventListener('holidaygift:close', handleGiftClose);
-  }, []);
   
   return (
     <div className="w-full h-full overflow-y-auto bg-white text-black">
@@ -410,39 +390,8 @@ export default function HomeLanding(){
       {/* Feature cards */}
       <FeaturesCarousel />
 
-      {/* Countdown Timer - Only in Holiday Mode */}
-      {holidayMode && <CountdownBanner />}
-
       {/* Featured products */}
       <FeaturedStrip />
-
-      {/* Holiday Advent Calendar - Only in Holiday Mode */}
-      {holidayMode && (
-        <div ref={calendarRef}>
-          <ChristmasCalendar />
-        </div>
-      )}
-
-      {/* Spin the Wheel - Only in Holiday Mode */}
-      {holidayMode && (
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-          <SpinTheWheel />
-        </div>
-      )}
-
-      {/* Gift Finder - Only in Holiday Mode */}
-      {holidayMode && (
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-          <GiftFinder />
-        </div>
-      )}
-
-      {/* Limited Spots Contest - Only in Holiday Mode */}
-      {holidayMode && (
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-          <LimitedSpots />
-        </div>
-      )}
 
       {/* Testimonials */}
       <TestimonialsCarousel />

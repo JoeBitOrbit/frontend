@@ -16,7 +16,7 @@ export default function UpdateProductPage() {
     const [description, setDescription] = useState(location.state.description);
     const [stock, setStock] = useState(location.state.stock);
     const [isAvailable, setIsAvailable] = useState(location.state.isAvailable !== false);
-    const [category, setCategory] = useState(location.state.category);
+    const [category, setCategory] = useState((location.state.category || []).length > 0 ? location.state.category : []);
     const [categories, setCategories] = useState([]);
     const [colorsEnabled, setColorsEnabled] = useState((location.state.colors || []).length > 0);
     const [colors, setColors] = useState(location.state.colors || []);
@@ -54,7 +54,7 @@ export default function UpdateProductPage() {
             images: responses.length > 0 ? responses : location.state.images,
             description: description,
             stock: Number(stock),
-            category: category,
+            category: Array.isArray(category) ? category : [category],
             colors: colorsEnabled ? colors : [],
             sizes: location.state.sizes || []
         }
@@ -175,19 +175,28 @@ export default function UpdateProductPage() {
                         <option value={false}>Not Available</option>
                     </select>
                 </div>
-                <div className="w-[200px] flex flex-col gap-[5px]">
-                    <label className="text-sm font-semibold">Category</label>
-                    <select
-                        value={category}
-                        onChange={(e) => {
-                            setCategory(e.target.value);
-                        }}
-                        className="w-full border-[1px] h-[40px] rounded-md"
-                    >
+                <div className="w-full flex flex-col gap-[5px]">
+                    <label className="text-sm font-semibold">Categories (Select Multiple)</label>
+                    <div className="flex flex-wrap gap-2">
                         {categories.map((c) => (
-                            <option key={c._id} value={c.slug}>{c.name}</option>
+                            <label key={c._id} className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                                <input 
+                                    type="checkbox" 
+                                    checked={category.includes(c.slug)}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setCategory([...category, c.slug]);
+                                        } else {
+                                            setCategory(category.filter(cat => cat !== c.slug));
+                                        }
+                                    }}
+                                    className="w-4 h-4 cursor-pointer"
+                                />
+                                <span className="text-sm text-black">{c.name}</span>
+                            </label>
                         ))}
-                    </select>
+                    </div>
+                    {category.length === 0 && <p className="text-xs text-gray-500 mt-2">At least one category is required</p>}
                 </div>
 
                 {/* Color Management */}
