@@ -22,7 +22,7 @@ export default function ImageSlider({ images }) {
                         key={i}
                         aria-label={`Go to slide ${i+1}`}
                         onClick={()=> setActive(i)}
-                        className={`w-4 h-4 rounded-full transition ${active===i? 'bg-red-600 scale-110' : 'bg-neutral-600 hover:bg-red-500'}`}
+                        className={`w-2.5 h-2.5 rounded-full transition ${active===i? 'bg-red-600 scale-110' : 'bg-neutral-600 hover:bg-red-500'}`}
                     />
                 ))}
             </div>
