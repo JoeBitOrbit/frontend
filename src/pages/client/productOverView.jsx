@@ -285,7 +285,9 @@ export default function ProductOverViewPage() {
 							<p className="text-sm text-gray-500">No sizes available</p>
 						)}
 					</div>
-			</div>					{/* Color Selection */}
+				</div>
+
+				{/* Color Selection */}
 				<div className="mt-4">
 					<h3 className="text-sm font-semibold text-black mb-3">Color</h3>
 					<div className="flex gap-3 flex-wrap">
@@ -307,7 +309,9 @@ export default function ProductOverViewPage() {
 							<p className="text-sm text-gray-500">No colors available</p>
 						)}
 					</div>
-				</div>					<p className="text-sm text-gray-700 leading-relaxed mt-4">
+				</div>
+
+				<p className="text-sm text-gray-700 leading-relaxed mt-4">
 						{product.description}
 					</p>
 					
