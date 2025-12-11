@@ -738,3 +738,157 @@ textarea:focus {
   border-color: rgba(220, 38, 38, 0.2);
 }
 
+/* === Responsive Design Fixes for Zoom Compatibility === */
+
+/* Ensure all elements properly scale on zoom */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(12px, 2vw, 16px);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Responsive container that respects viewport */
+.responsive-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 5vw, 2rem);
+}
+
+/* Responsive text sizing with fluid typography */
+h1 {
+  font-size: clamp(1.5rem, 5vw, 3.5rem);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: clamp(1.3rem, 4vw, 2.5rem);
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  line-height: 1.4;
+}
+
+p, span, div {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Responsive image sizing */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Fix grid overflow on small screens */
+@media (max-width: 640px) {
+  [class*="grid"] {
+    grid-auto-flow: row;
+  }
+}
+
+/* Prevent horizontal scroll */
+@media (max-width: 1024px) {
+  .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Responsive flex */
+.flex {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+/* Responsive padding for containers */
+@media (max-width: 640px) {
+  [class*="px-"] {
+    padding-left: clamp(0.5rem, 3vw, 1.5rem) !important;
+    padding-right: clamp(0.5rem, 3vw, 1.5rem) !important;
+  }
+}
+
+/* Responsive gap spacing */
+@media (max-width: 640px) {
+  .gap-6,
+  .gap-8,
+  .gap-12 {
+    gap: clamp(1rem, 3vw, 2rem) !important;
+  }
+}
+
+/* Fix testimonials carousel responsiveness */
+.testimonials-carousel {
+  width: 100%;
+  min-height: clamp(200px, 40vh, 400px);
+}
+
+.testimonial-card {
+  min-width: clamp(280px, 85vw, 400px);
+  width: auto;
+}
+
+/* Fix product cards */
+.product-card {
+  min-width: 0;
+  aspect-ratio: 3/4;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* Prevent zoom-out text overflow */
+@media (max-width: 768px) {
+  [class*="text-"] {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+/* Ensure buttons are always clickable */
+button, a, input[type="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (max-width: 640px) {
+  button, a, input[type="button"], input[type="submit"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Fix modal responsiveness */
+.modal, [role="dialog"] {
+  max-width: min(90vw, 600px);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Responsive margin reset for small screens */
+@media (max-width: 640px) {
+  [class*="m-"][class*="md:"] {
+    margin: unset;
+  }
+}
+
+
