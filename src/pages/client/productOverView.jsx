@@ -202,7 +202,7 @@ export default function ProductOverViewPage() {
 		<div className="w-full min-h-screen bg-white text-black">
 			{status === "loading" && <Loader />}
 			{status === "success" && (
-				<div className="w-full h-full flex flex-col">
+				<div className="w-full flex flex-col">
 				{/* Image Section - Full Width */}
 				<div className="w-full flex flex-col justify-center items-center px-4 md:px-12 py-8">
 					<div className="w-full max-w-6xl">

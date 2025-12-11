@@ -14,9 +14,9 @@ import ChristmasOffersPage from './christmasOffersPage';
 
 export default function ClientWebPage() {
 	return (
-		<div className="w-full h-screen max-h-screen">
+		<div className="w-full min-h-screen flex flex-col">
 			<Header />
-			<div className="w-full h-[calc(100%-100px)] ">
+			<div className="w-full flex-1 overflow-auto">
 				<Routes path="/">
 					<Route path="/" element={<HomeLanding />} />
 					<Route path="/holiday-offers" element={<ChristmasOffersPage />} />

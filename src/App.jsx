@@ -31,7 +31,7 @@ function AppContent() {
 			{holidayMode && <Snowflakes />}
 			<ChristmasGiftModal />
 			<SurprisePopup />
-			<div className="w-full h-screen flex justify-center items-center text-secondary overflow-hidden transition-all duration-500 bg-primary">
+			<div className="w-full min-h-screen flex flex-col justify-center items-center text-secondary transition-all duration-500 bg-primary">
 				<Toaster position="top-right" />
 				<Routes>
 					<Route path="/login" element={<LoginPage />} />
