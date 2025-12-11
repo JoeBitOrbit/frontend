@@ -122,7 +122,7 @@ export default function ProductCard({ product }) {
 		<div
 			ref={cardRef}
 			onClick={handleCardClick}
-			className={`group w-[260px] h-[360px] flex flex-col shrink-0 rounded-2xl overflow-hidden border transition relative hover-lift cursor-pointer bg-white border-gray-200 hover:border-red-600 hover:shadow-xl`}
+			className={`group w-full h-[360px] flex flex-col shrink-0 rounded-2xl overflow-hidden border transition relative hover-lift cursor-pointer bg-white border-gray-200 hover:border-red-600 hover:shadow-xl`}
 		>
 			{(discount || holidayMode) && (
 				<span className="absolute top-3 left-3 text-white text-xs font-semibold px-2 py-1 rounded-full shadow z-10 bg-red-600">
