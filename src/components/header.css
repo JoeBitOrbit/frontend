@@ -500,7 +500,21 @@
 	}
 
 	.search-container {
-		display: none !important;
+		display: flex !important;
+		max-width: 100%;
+		min-width: auto;
+		height: 44px;
+	}
+
+	.search-input {
+		padding: 0 16px;
+		font-size: 14px;
+		min-height: 44px;
+	}
+
+	.search-btn {
+		padding: 0 16px;
+		min-height: 44px;
 	}
 }
 
