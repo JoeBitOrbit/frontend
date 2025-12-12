@@ -388,18 +388,16 @@ export default function ProductOverViewPage() {
 						</div>
 					</div>
 
-				{related.length > 0 && (
-					<div className="mt-10">
-						<h3 className="text-2xl font-bold mb-6 text-black">You May Also Like</h3>
-						<div className="flex gap-4 overflow-x-auto py-2">
-							{related.map(rp => (
-								<div key={rp.productId} className="flex-shrink-0 w-48">
-									<ProductCard product={rp} />
-								</div>
-							))}
+					{related.length > 0 && (
+						<div className="mt-16 w-full">
+							<h3 className="text-3xl font-bold mb-10 text-black">You May Also Like</h3>
+							<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+								{related.slice(0, 8).map(rp => (
+									<ProductCard key={rp._id || rp.productId} product={rp} />
+								))}
+							</div>
 						</div>
-					</div>
-				)}					<div className="mt-12 w-full border-t border-gray-200 pt-12 -mx-6 px-6">
+					)}					<div className="mt-12 w-full border-t border-gray-200 pt-12 -mx-6 px-6">
 						<div className="max-w-4xl mx-auto">
 							<div className="mb-8">
 								{reviewsData.total === 0 ? (
