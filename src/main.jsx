@@ -3,6 +3,7 @@ import { StrictMode, useEffect, useState, Component } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
+import Snowflakes from './components/Snowflakes';
 import { BrowserRouter } from 'react-router-dom'
 import GlobalLoader from './components/GlobalLoader'
 import { HolidayProvider } from './context/HolidayContext'
@@ -170,6 +171,7 @@ createRoot(document.getElementById('root')).render(
     <HolidayProvider>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <GlobalLoader />
+        <Snowflakes />
         <div id="app-root" className="app-root transition-all duration-300">
           <AppErrorBoundary>
             <AppLoader />

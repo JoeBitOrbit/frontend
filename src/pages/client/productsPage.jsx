@@ -6,7 +6,7 @@ import Loader from "../../components/loader";
 import ProductCard from "../../components/productCard";
 import ProductSkeleton from "../../components/productSkeleton";
 import Footer from "../../components/Footer";
-import { useHoliday } from "../../context/HolidayContext";
+
 import { FiShoppingBag } from "react-icons/fi";
 
 function ProductsLoader({ fadeOut, products }) {
@@ -145,9 +145,7 @@ function ProductsLoader({ fadeOut, products }) {
     );
 }
 
-export default function ProductsPage() {
-	const holidayContext = useHoliday();
-	const holidayMode = holidayContext?.holidayMode || false;
+
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [fadeLoader, setFadeLoader] = useState(false);

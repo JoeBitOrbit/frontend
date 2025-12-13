@@ -19,8 +19,6 @@ import { useHoliday } from "./context/HolidayContext";
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 function AppContent() {
-	const { holidayMode } = useHoliday();
-
 	useEffect(() => {
 		const cleanup = init3DTyping();
 		return cleanup;
@@ -28,7 +26,7 @@ function AppContent() {
 
 	return (
 		<GoogleOAuthProvider clientId={clientId}>
-			{holidayMode && <Snowflakes />}
+			<Snowflakes />
 			<ChristmasGiftModal />
 			<SurprisePopup />
 			<div className="w-full min-h-screen flex flex-col justify-center items-center text-secondary transition-all duration-500 bg-primary">

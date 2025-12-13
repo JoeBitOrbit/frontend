@@ -1,9 +1,9 @@
 import { useState } from 'react';
+
 import { getItem as safeGetItem, setItem as safeSetItem } from '../../utils/safeStorage';
 import { createPromo, listPromos, sendBroadcast } from '../../services/newsletter';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import PeppermintSlider from '../../components/PeppermintSlider';
 
 export default function SettingsAdmin(){
   const [saving,setSaving] = useState(false);
@@ -20,20 +20,7 @@ export default function SettingsAdmin(){
   const [promos, setPromos] = useState([]);
   const [broadcastSubj, setBroadcastSubj] = useState('');
   const [broadcastMsg, setBroadcastMsg] = useState('');
-  // Holiday Settings
-  const [holidayEnabled, setHolidayEnabled] = useState(true);
-  const [holidayDiscount, setHolidayDiscount] = useState(25);
-  const [snowflakesEnabled, setSnowflakesEnabled] = useState(true);
-  const [spinWheelEnabled, setSpinWheelEnabled] = useState(true);
-  const [giftFinderEnabled, setGiftFinderEnabled] = useState(true);
-  const [limitedSpotsEnabled, setLimitedSpotsEnabled] = useState(true);
-  const [limitedSpotCount, setLimitedSpotCount] = useState(100);
-  const [countdownEnabled, setCountdownEnabled] = useState(true);
-  const [countdownDate, setCountdownDate] = useState('2025-12-25');
-  const [surprisePopupEnabled, setSurprisePopupEnabled] = useState(true);
-  const [surprisePopupFrequency, setSurprisePopupFrequency] = useState(5);
-  const [adventCalendarEnabled, setAdventCalendarEnabled] = useState(true);
-  const [holidayTheme, setHolidayTheme] = useState('red'); // red, gold, silver, multicolor
+
 
   useEffect(()=>{
     listPromos().then(r=> setPromos(r.data)).catch(()=>{});
@@ -45,26 +32,7 @@ export default function SettingsAdmin(){
       if(saved.bgMain) setBgMain(saved.bgMain);
       if(saved.textMain) setTextMain(saved.textMain);
     }catch(_){ }
-    // Load Holiday settings
-    try{
-      const holiday = safeGetItem('holidaySettings');
-      if(holiday) {
-        const parsed = JSON.parse(holiday);
-        if(parsed.enabled !== undefined) setHolidayEnabled(parsed.enabled);
-        if(parsed.discount !== undefined) setHolidayDiscount(parsed.discount);
-        if(parsed.snowflakes !== undefined) setSnowflakesEnabled(parsed.snowflakes);
-        if(parsed.spinWheel !== undefined) setSpinWheelEnabled(parsed.spinWheel);
-        if(parsed.giftFinder !== undefined) setGiftFinderEnabled(parsed.giftFinder);
-        if(parsed.limitedSpots !== undefined) setLimitedSpotsEnabled(parsed.limitedSpots);
-        if(parsed.spotCount !== undefined) setLimitedSpotCount(parsed.spotCount);
-        if(parsed.countdown !== undefined) setCountdownEnabled(parsed.countdown);
-        if(parsed.countdownDate !== undefined) setCountdownDate(parsed.countdownDate);
-        if(parsed.popup !== undefined) setSurprisePopupEnabled(parsed.popup);
-        if(parsed.popupFreq !== undefined) setSurprisePopupFrequency(parsed.popupFreq);
-        if(parsed.advent !== undefined) setAdventCalendarEnabled(parsed.advent);
-        if(parsed.theme !== undefined) setHolidayTheme(parsed.theme);
-      }
-    }catch(_){ }
+
   },[]);
 
   function save(){
@@ -81,272 +49,14 @@ export default function SettingsAdmin(){
     setTimeout(()=> setSaving(false), 600);
   }
 
-  function saveHolidaySettings(){
-    setSaving(true);
-    try{
-      const holidaySettings = {
-        enabled: holidayEnabled,
-        discount: holidayDiscount,
-        snowflakes: snowflakesEnabled,
-        spinWheel: spinWheelEnabled,
-        giftFinder: giftFinderEnabled,
-        limitedSpots: limitedSpotsEnabled,
-        spotCount: limitedSpotCount,
-        countdown: countdownEnabled,
-        countdownDate: countdownDate,
-        popup: surprisePopupEnabled,
-        popupFreq: surprisePopupFrequency,
-        advent: adventCalendarEnabled,
-        theme: holidayTheme
-      };
-      safeSetItem('holidaySettings', JSON.stringify(holidaySettings));
-      window.dispatchEvent(new Event('holidaySettingsUpdated'));
-      toast.success('Holiday settings saved');
-    }catch(e){ 
-      console.error(e);
-      toast.error('Failed to save holiday settings'); 
-    }
-    setTimeout(()=> setSaving(false), 600);
-  }
+
 
   return (
     <div className='p-8 max-w-4xl'>
       <h1 className='text-2xl font-semibold mb-6 text-white'>Settings</h1>
       <div className='space-y-8'>
         
-        {/* HOLIDAY SETTINGS SECTION */}
-        <div className='bg-gradient-to-r from-red-900 via-red-800 to-red-900 p-6 rounded-lg border-2 border-red-600'>
-          <h2 className='text-xl font-bold mb-6 text-white flex items-center gap-2'>
-            🎉 Holiday Mode Settings
-          </h2>
-          
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            
-            {/* Master Enable */}
-            <div>
-              <label className='text-sm font-semibold text-white block mb-2'>Enable Holiday Mode</label>
-              <div className='flex gap-3'>
-                <button 
-                  onClick={() => setHolidayEnabled(true)}
-                  className={`flex-1 py-2 rounded font-semibold transition ${holidayEnabled ? 'bg-green-500 text-white' : 'bg-gray-400 text-gray-700'}`}
-                >
-                  ✓ ON
-                </button>
-                <button 
-                  onClick={() => setHolidayEnabled(false)}
-                  className={`flex-1 py-2 rounded font-semibold transition ${!holidayEnabled ? 'bg-red-500 text-white' : 'bg-gray-400 text-gray-700'}`}
-                >
-                  ✗ OFF
-                </button>
-              </div>
-            </div>
 
-            {/* Holiday Discount */}
-            <div>
-              <div className='text-sm font-semibold text-white block mb-2'>Holiday Discount - Max 25%</div>
-              <div className='flex gap-2'>
-                {[5, 10, 15, 20, 25].map(val => (
-                  <button
-                    key={val}
-                    onClick={() => setHolidayDiscount(val)}
-                    className={`flex-1 py-2 rounded font-semibold transition ${
-                      holidayDiscount === val
-                        ? 'bg-red-600 text-white'
-                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                    }`}
-                  >
-                    {val}%
-                  </button>
-                ))}
-              </div>
-              <p className='text-xs text-red-200 mt-2'>Max discount is capped at 25% - does not stack with product discounts</p>
-            </div>
-
-            {/* Snowflakes */}
-            <div>
-              <label className='text-sm font-semibold text-white block mb-2'>Falling Snowflakes</label>
-              <div className='flex gap-3'>
-                <button 
-                  onClick={() => setSnowflakesEnabled(true)}
-                  className={`flex-1 py-2 rounded font-semibold transition ${snowflakesEnabled ? 'bg-blue-500 text-white' : 'bg-gray-400 text-gray-700'}`}
-                >
-                  ✓ ON
-                </button>
-                <button 
-                  onClick={() => setSnowflakesEnabled(false)}
-                  className={`flex-1 py-2 rounded font-semibold transition ${!snowflakesEnabled ? 'bg-gray-500 text-white' : 'bg-gray-400 text-gray-700'}`}
-                >
-                  ✗ OFF
-                </button>
-              </div>
-            </div>
-
-            {/* Holiday Theme */}
-            <div>
-              <label className='text-sm font-semibold text-white block mb-2'>Color Theme</label>
-              <select 
-                value={holidayTheme} 
-                onChange={e=> setHolidayTheme(e.target.value)}
-                className='w-full h-10 rounded-md bg-white border-2 border-red-400 outline-none px-3 text-black font-semibold'
-              >
-                <option value='red'>🔴 Red & Green</option>
-                <option value='gold'>🟡 Gold & Silver</option>
-                <option value='silver'>⚪ Frosty Silver</option>
-                <option value='multicolor'>🌈 Multicolor</option>
-              </select>
-            </div>
-          </div>
-
-          <div className='mt-6 border-t border-red-500 pt-6'>
-            <h3 className='text-lg font-bold text-white mb-4'>🎮 Game Features</h3>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-              
-              {/* Spin the Wheel */}
-              <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-2'>Spin the Wheel Game</label>
-                <div className='flex gap-2'>
-                  <button 
-                    onClick={() => setSpinWheelEnabled(true)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${spinWheelEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    ON
-                  </button>
-                  <button 
-                    onClick={() => setSpinWheelEnabled(false)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${!spinWheelEnabled ? 'bg-red-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    OFF
-                  </button>
-                </div>
-              </div>
-
-              {/* Gift Finder */}
-              <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-2'>Gift Finder Quiz</label>
-                <div className='flex gap-2'>
-                  <button 
-                    onClick={() => setGiftFinderEnabled(true)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${giftFinderEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    ON
-                  </button>
-                  <button 
-                    onClick={() => setGiftFinderEnabled(false)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${!giftFinderEnabled ? 'bg-red-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    OFF
-                  </button>
-                </div>
-              </div>
-
-              {/* Limited Spots */}
-              <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-3'>Limited Spots Contest</label>
-                <div className='flex gap-2 mb-3'>
-                  <button 
-                    onClick={() => setLimitedSpotsEnabled(true)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${limitedSpotsEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    ON
-                  </button>
-                  <button 
-                    onClick={() => setLimitedSpotsEnabled(false)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${!limitedSpotsEnabled ? 'bg-red-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    OFF
-                  </button>
-                </div>
-                <PeppermintSlider 
-                  value={limitedSpotCount}
-                  onChange={setLimitedSpotCount}
-                  min={1}
-                  max={500}
-                  label="Daily Spots"
-                  accentColor="#ea580c"
-                />
-              </div>
-
-              {/* Countdown */}
-              <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-2'>Countdown Timer</label>
-                <div className='flex gap-2 mb-2'>
-                  <button 
-                    onClick={() => setCountdownEnabled(true)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${countdownEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    ON
-                  </button>
-                  <button 
-                    onClick={() => setCountdownEnabled(false)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${!countdownEnabled ? 'bg-red-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    OFF
-                  </button>
-                </div>
-                <input 
-                  type='date' 
-                  value={countdownDate} 
-                  onChange={e=> setCountdownDate(e.target.value)}
-                  className='w-full h-8 rounded px-2 text-black text-sm'
-                />
-              </div>
-
-              {/* Surprise Popups */}
-              <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-3'>Surprise Popups</label>
-                <div className='flex gap-2 mb-3'>
-                  <button 
-                    onClick={() => setSurprisePopupEnabled(true)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${surprisePopupEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    ON
-                  </button>
-                  <button 
-                    onClick={() => setSurprisePopupEnabled(false)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${!surprisePopupEnabled ? 'bg-red-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    OFF
-                  </button>
-                </div>
-                <PeppermintSlider 
-                  value={surprisePopupFrequency}
-                  onChange={setSurprisePopupFrequency}
-                  min={1}
-                  max={60}
-                  label="Trigger every (minutes)"
-                  accentColor="#ec4899"
-                />
-              </div>
-
-              {/* Advent Calendar */}
-              <div className='bg-red-700/30 p-4 rounded'>
-                <label className='text-sm font-semibold text-white block mb-2'>Advent Calendar</label>
-                <div className='flex gap-2'>
-                  <button 
-                    onClick={() => setAdventCalendarEnabled(true)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${adventCalendarEnabled ? 'bg-green-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    ON
-                  </button>
-                  <button 
-                    onClick={() => setAdventCalendarEnabled(false)}
-                    className={`flex-1 py-1 rounded text-sm font-semibold ${!adventCalendarEnabled ? 'bg-red-500 text-white' : 'bg-gray-400'}`}
-                  >
-                    OFF
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <button 
-            disabled={saving} 
-            onClick={saveHolidaySettings} 
-            className='mt-6 w-full px-6 py-3 rounded-md hover:opacity-90 disabled:opacity-60 text-sm font-semibold bg-green-600 text-white'
-          >
-            {saving ? 'Saving...' : '💾 Save Holiday Settings'}
-          </button>
-        </div>
 
         {/* GENERAL SETTINGS SECTION */}
         <div>
