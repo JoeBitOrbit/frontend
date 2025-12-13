@@ -100,7 +100,7 @@ export default function Header() {
 						</Link>
 					</div>
 
-					{/* New Search Bar */}
+					{/* New Search Bar - full width, icon inside */}
 					<div className="flex-1 flex justify-center items-center">
 						<form
 							onSubmit={e => {
@@ -108,17 +108,17 @@ export default function Header() {
 								const value = e.target.elements.search.value.trim();
 								if (value) navigate(`/products?search=${encodeURIComponent(value)}`);
 							}}
-							className="w-full max-w-xl flex items-center bg-white border-2 border-red-500 rounded-full px-4 py-2 shadow-sm"
+							className="w-full max-w-2xl relative"
 							role="search"
 						>
 							<input
 								type="text"
 								name="search"
 								placeholder="Search products..."
-								className="flex-1 bg-transparent outline-none border-none text-lg px-2 py-1 rounded-full"
+								className="w-full pl-6 pr-12 py-3 text-lg border-2 border-red-500 rounded-full outline-none focus:ring-2 focus:ring-red-200 transition placeholder-gray-400"
 								style={{ minWidth: 0 }}
 							/>
-							<button type="submit" className="p-2 text-red-500 hover:text-red-700 focus:outline-none">
+							<button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 focus:outline-none">
 								<FiSearch size={22} />
 							</button>
 						</form>
